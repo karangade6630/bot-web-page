@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Movie not found</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            red: '#E50914',
+                            redHover: '#B81D24',
+                            darkBg: '#0F0F0F',
+                            cardBg: '#181818',
+                            hoverBg: '#282828'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0F0F0F;
+            color: #E5E5E5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.theme-bright {
+            background-color: #F3F4F6;
+            color: #111827;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-red selection:text-white">
+
+    <!-- Header Navigation -->
+    <header id="main-header" class="sticky top-0 z-50 bg-[#0F0F0F]/90 backdrop-blur-md border-b border-white/[0.06] transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='/'">
+                <span class="text-3xl font-black font-display text-brand-red tracking-tighter">MOVIE <span class="text-white font-light id-logo-span">TIME</span></span>
+                <span class="bg-brand-red/10 text-brand-red text-[10px] font-bold px-1.5 py-0.5 rounded border border-brand-red/20 uppercase tracking-widest hidden sm:inline-block">Web Portal</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow flex items-center justify-center py-16 px-4">
+        <div class="max-w-md w-full text-center space-y-6 bg-brand-cardBg border border-white/[0.04] rounded-2xl p-8 sm:p-10 shadow-2xl relative overflow-hidden transition-all duration-300" id="card-container">
+            <!-- Backdrop Glow -->
+            <div class="absolute -top-1/4 -right-1/4 w-[200px] h-[200px] bg-brand-red/10 blur-[80px] rounded-full pointer-events-none"></div>
+
+            <div class="w-20 h-20 bg-brand-red/10 border border-brand-red/20 rounded-full flex items-center justify-center mx-auto text-brand-red animate-pulse">
+                <i data-lucide="alert-triangle" class="w-10 h-10"></i>
+            </div>
+
+            <div class="space-y-2">
+                <h1 class="text-6xl font-black font-display text-brand-red tracking-tighter">404</h1>
+                <h2 class="text-2xl font-bold font-display text-white transition-all duration-300" id="not-found-heading">Page or Movie Not Found</h2>
+                <p class="text-gray-400 text-sm leading-relaxed transition-all duration-300" id="not-found-desc">
+                    The content you requested is currently unavailable. The link may have been broken or the movie might have been de-synced from our listing tables.
+                </p>
+            </div>
+
+            <div class="pt-4">
+                <button onclick="window.location.href='/'" class="w-full bg-brand-red hover:bg-brand-redHover text-white font-bold py-3.5 px-6 rounded-full flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-brand-red/20">
+                    <i data-lucide="home" class="w-4 h-4"></i>
+                    <span>Back to Dashboard</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Component -->
+    <footer class="bg-[#0A0A0A] border-t border-white/[0.05] py-8 text-center space-y-4 text-xs text-gray-550 transition-all duration-300" id="main-footer">
+        <p class="text-gray-450">Copyright &copy; 2026 <span class="font-bold text-white text-foo">Movie Time System</span>. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Set up the dark/light matches and icons helper
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // Sync theme with localStorage
+            const storedTheme = localStorage.getItem('site_theme');
+            if (storedTheme === 'bright') {
+                document.body.classList.add('theme-bright');
+                
+                // Set light modes matching styles inside layout elements
+                const header = document.getElementById('main-header');
+                const card = document.getElementById('card-container');
+                const titleText = document.getElementById('not-found-heading');
+                const subText = document.getElementById('not-found-desc');
+                const footer = document.getElementById('main-footer');
+                const logoSpan = document.querySelector('.id-logo-span');
+                const textFoo = document.querySelector('.text-foo');
+
+                if (header) {
+                    header.classList.remove('bg-[#0F0F0F]/90', 'border-white/[0.06]');
+                    header.classList.add('bg-gray-100/90', 'border-gray-250');
+                }
+                if (card) {
+                    card.classList.remove('bg-brand-cardBg', 'border-white/[0.04]');
+                    card.classList.add('bg-white', 'border-gray-200');
+                }
+                if (titleText) {
+                    titleText.classList.remove('text-white');
+                    titleText.classList.add('text-gray-900');
+                }
+                if (subText) {
+                    subText.classList.remove('text-gray-400');
+                    subText.classList.add('text-gray-600');
+                }
+                if (footer) {
+                    footer.classList.remove('bg-[#0A0A0A]', 'border-white/[0.05]');
+                    footer.classList.add('bg-gray-200', 'border-gray-300');
+                }
+                if (logoSpan) {
+                    logoSpan.classList.remove('text-white');
+                    logoSpan.classList.add('text-gray-900');
+                }
+                if (textFoo) {
+                    textFoo.classList.remove('text-white');
+                    textFoo.classList.add('text-gray-900');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
