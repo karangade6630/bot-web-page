@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Time | Premium Movies Archive</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            red: '#E50914',
+                            redHover: '#B81D24',
+                            darkBg: '#0F0F0F',
+                            cardBg: '#181818',
+                            hoverBg: '#282828'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0F0F0F;
+            color: #E5E5E5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0F0F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        /* Bright Theme Overrides */
+        body.theme-bright {
+            background-color: #F3F4F6 !important;
+            color: #1F2937 !important;
+        }
+        body.theme-bright header {
+            background-color: rgba(243, 244, 246, 0.9) !important;
+            border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        body.theme-bright .header-logo-span {
+            color: #111827 !important;
+        }
+        body.theme-bright #header-search-container input {
+            background-color: #FFFFFF !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+            color: #111827 !important;
+        }
+        body.theme-bright #mobile-search-container input {
+            background-color: #FFFFFF !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+            color: #111827 !important;
+        }
+        body.theme-bright #hero-section {
+            background: linear-gradient(180deg, #E5E7EB 0%, #F3F4F6 100%) !important;
+            border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        body.theme-bright #hero-title {
+            color: #1F2937 !important;
+        }
+        body.theme-bright #hero-plot {
+            color: #4B5563 !important;
+        }
+        body.theme-bright #hero-year {
+            background-color: rgba(0, 0, 0, 0.06) !important;
+            color: #111827 !important;
+        }
+        body.theme-bright #hero-genre {
+            background-color: rgba(0, 0, 0, 0.06) !important;
+            color: #111827 !important;
+        }
+        body.theme-bright #hero-cta {
+            background-color: #111827 !important;
+            color: #FFFFFF !important;
+        }
+        body.theme-bright #grid-header {
+            color: #111827 !important;
+        }
+        body.theme-bright #grid-subheader {
+            color: #4B5563 !important;
+        }
+        body.theme-bright .bg-brand-cardBg {
+            background-color: #FFFFFF !important;
+            border-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        body.theme-bright .bg-brand-cardBg h3 {
+            color: #111827 !important;
+        }
+        body.theme-bright .bg-brand-cardBg span {
+            color: #4B5563 !important;
+        }
+        body.theme-bright #view-details {
+            color: #111827 !important;
+        }
+        body.theme-bright #movie-details-content {
+            background-color: #FFFFFF !important;
+            border-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        body.theme-bright #detail-title {
+            color: #111827 !important;
+        }
+        body.theme-bright #detail-plot {
+            color: #374151 !important;
+        }
+        body.theme-bright #movie-details-content h4,
+        body.theme-bright #movie-details-content strong,
+        body.theme-bright #movie-details-content span {
+            color: #1F2937 !important;
+        }
+        body.theme-bright #movie-details-content span.text-gray-500 {
+            color: #6B7280 !important;
+        }
+        body.theme-bright #movie-details-content .bg-brand-darkBg\/50 {
+            background-color: #F9FAFB !important;
+            border-color: rgba(0, 0, 0, 0.06) !important;
+        }
+        body.theme-bright #movie-details-content .bg-\[\#0F0F0F\]\/80 {
+            background-color: #F9FAFB !important;
+            border-color: rgba(0, 0, 0, 0.06) !important;
+        }
+        body.theme-bright #pagination-container {
+            border-top-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        body.theme-bright #pagination-container p,
+        body.theme-bright #pagination-container span {
+            color: #374151 !important;
+        }
+        body.theme-bright #pag-prev,
+        body.theme-bright #pag-next {
+            background-color: #FFFFFF !important;
+            color: #111827 !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        body.theme-bright footer {
+            background-color: #E5E7EB !important;
+            border-top-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        body.theme-bright footer p,
+        body.theme-bright footer span {
+            color: #4B5563 !important;
+        }
+        body.theme-bright footer span.text-white {
+            color: #111827 !important;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-brand-red selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-[#0F0F0F]/90 backdrop-blur-md border-b border-white/[0.06] transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 cursor-pointer shrink-0" onclick="navigateTo('/website')" id="nav-logo">
+                <span class="text-2xl sm:text-3xl font-black font-display text-brand-red tracking-tighter">MOVIE<span class="text-white font-light header-logo-span transition-colors"> TIME</span></span>
+                <span class="bg-brand-red/10 text-brand-red text-[10px] font-bold px-1.5 py-0.5 rounded border border-brand-red/20 uppercase tracking-widest hidden lg:inline-block">Web Portal</span>
+            </div>
+
+            <!-- Header Search Bar (Always fixed at the top, perfectly responsive across all views!) -->
+            <div class="flex-1 max-w-[170px] xs:max-w-xs sm:max-w-sm md:max-w-md mx-1 xs:mx-2 sm:mx-6 flex items-center gap-1.5 sm:gap-2" id="header-search-container">
+                <div class="relative flex-1">
+                    <input type="text" id="search-input" placeholder="Search movies..." class="w-full bg-[#181818] border border-white/[0.08] rounded-full py-2 pl-8 sm:pl-10 pr-3 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all">
+                    <span class="absolute left-2.5 sm:left-3.5 top-2.5 text-gray-400"><i data-lucide="search" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></span>
+                </div>
+                <button id="search-btn" class="bg-brand-red hover:bg-brand-redHover text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold transition-all flex items-center gap-1 shrink-0 shadow-md">
+                    <span class="hidden xs:inline">Search</span>
+                    <i data-lucide="search" class="w-3.5 h-3.5 xs:hidden"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+                <!-- Theme toggle button -->
+                <button id="theme-toggle" class="p-2 sm:p-2.5 rounded-full bg-[#181818] border border-white/[0.08] text-gray-400 hover:text-white hover:bg-brand-hoverBg transition-all flex items-center justify-center cursor-pointer" title="Toggle Bright/Dark Mode" aria-label="Toggle Bright/Dark Mode">
+                    <i data-lucide="sun" class="w-4 h-4 hidden" id="theme-sun-icon"></i>
+                    <i data-lucide="moon" class="w-4 h-4" id="theme-moon-icon"></i>
+                </button>
+
+                <a href="https://t.me/" target="_blank" id="telegram-link" class="bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-semibold p-2.5 sm:px-4 sm:py-2.5 rounded-full flex items-center gap-2 transition-all shadow-lg shadow-brand-red/20" title="Open in Telegram">
+                    <i data-lucide="send" class="w-4 h-4 fill-current"></i>
+                    <span class="hidden sm:inline">Open in Telegram</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow">
+        
+        <!-- MAIN LAYOUT WRAPPER -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            
+            <!-- VIEW: MOVIES GRID LIST -->
+            <div id="view-grid" class="space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-white/[0.06] pb-5">
+                    <div>
+                        <h2 id="grid-header" class="text-2xl sm:text-3xl font-extrabold font-display text-white tracking-tight">Browse Movies</h2>
+                        <p class="text-xs sm:text-sm text-gray-500 mt-1" id="grid-subheader">Explore our library of high-speed digital releases.</p>
+                    </div>
+                    
+                    <!-- Quick Stats Badges -->
+                    <div class="flex flex-wrap gap-2 text-xs text-gray-400">
+                        <span class="bg-[#181818] px-3 py-1.5 rounded-full border border-white/[0.05]">🍿 <strong id="stat-total" class="text-white">...</strong> Titles</span>
+                        <span class="bg-[#181818] px-3 py-1.5 rounded-full border border-white/[0.05]">📶 Network Node: <strong class="text-green-500">Live</strong></span>
+                    </div>
+                </div>
+
+                <!-- LOADING INDICATOR -->
+                <div id="loader-grid" class="flex flex-col items-center justify-center py-20 space-y-4">
+                    <div class="w-12 h-12 border-4 border-brand-red border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-sm text-gray-500 font-medium">Scanning local file tables...</p>
+                </div>
+
+                <!-- EMPTY STATE -->
+                <div id="empty-grid" class="hidden text-center py-24 space-y-4 max-w-md mx-auto">
+                    <div class="w-16 h-16 bg-brand-red/10 border border-brand-red/20 rounded-full flex items-center justify-center mx-auto text-brand-red">
+                        <i data-lucide="film" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold font-display text-white">No movie matches</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Could not find matching resources. Check spelling or request in our bot.</p>
+                    <button onclick="clearSearch()" class="bg-[#181818] hover:bg-brand-hoverBg text-xs text-white border border-white/[0.08] px-5 py-2 rounded-full transition-all mt-4 font-semibold">
+                        Clear Filters
+                    </button>
+                </div>
+
+                <!-- MOVIE GRID -->
+                <div id="movies-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4 sm:gap-6"></div>
+
+                <!-- PAGINATION CONTROLS -->
+                <div id="pagination-container" class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-10 border-t border-white/[0.06] hidden">
+                    <p class="text-xs sm:text-sm text-gray-500">Showing page <span id="pag-current" class="text-white font-semibold">1</span> of <span id="pag-total" class="text-white font-semibold">1</span></p>
+                    <div class="flex items-center gap-2">
+                        <button id="pag-prev" onclick="handlePrevPage()" class="bg-[#181818] hover:bg-brand-hoverBg text-white border border-white/[0.08] px-4 py-2 rounded-lg flex items-center gap-1 text-xs sm:text-sm transition-all disabled:opacity-40 disabled:hover:bg-[#181818] disabled:cursor-not-allowed">
+                            <i data-lucide="chevron-left" class="w-4 h-4"></i> Prev
+                        </button>
+                        <button id="pag-next" onclick="handleNextPage()" class="bg-[#181818] hover:bg-brand-hoverBg text-white border border-white/[0.08] px-4 py-2 rounded-lg flex items-center gap-1 text-xs sm:text-sm transition-all disabled:opacity-40 disabled:hover:bg-[#181818] disabled:cursor-not-allowed">
+                            Next <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: MOVIE DETAILS (Hidden by default) -->
+            <div id="view-details" class="hidden">
+                <!-- Back trigger -->
+                <div class="mb-6">
+                    <button onclick="navigateTo('/website')" class="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-400 hover:text-white bg-[#181818] border border-white/[0.08] rounded-full px-4 py-2 transition-all">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Catalog
+                    </button>
+                </div>
+
+                <div id="movie-loader" class="flex flex-col items-center justify-center py-24 space-y-4">
+                    <div class="w-12 h-12 border-4 border-brand-red border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-sm text-gray-500 font-medium">Scraping movie fields...</p>
+                </div>
+
+                <div id="movie-details-content" class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 bg-[#181818] border border-white/[0.06] rounded-2xl p-6 sm:p-10 relative overflow-hidden hidden">
+                    <!-- Decorative backdrop glows inside details card -->
+                    <div class="absolute -top-1/4 -right-1/4 w-[300px] h-[300px] bg-brand-red/5 blur-[80px] rounded-full pointer-events-none"></div>
+
+                    <!-- Left: Poster Column -->
+                    <div class="md:col-span-1 space-y-6">
+                        <div class="relative group">
+                            <img id="detail-poster" src="https://placehold.co/300x450/111827/FFFFFF/png?text=Loading..." alt="Movie Poster" class="w-full rounded-xl border border-white/[0.08] shadow-2xl object-cover aspect-[2/3] transform transition duration-300 group-hover:scale-[1.01]">
+                            <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1 border border-white/10 text-amber-500 font-bold text-xs" id="detail-rating-container">
+                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i> <span id="detail-rating">N/A</span>
+                            </div>
+                        </div>
+
+                        <!-- Info Pills Block on Mobile / Sidebar -->
+                        <div class="space-y-4 bg-brand-darkBg/50 border border-white/[0.04] p-5 rounded-xl">
+                            <h4 class="text-xs uppercase text-gray-500 font-bold tracking-widest border-b border-white/[0.04] pb-2">Properties</h4>
+                            
+                            <div class="grid grid-cols-2 gap-3 text-sm">
+                                <div>
+                                    <span class="text-xs text-gray-500 block">Year</span>
+                                    <strong class="text-white" id="info-year">N/A</strong>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-gray-500 block">Type</span>
+                                    <strong class="text-white uppercase text-xs font-semibold" id="info-type">N/A</strong>
+                                </div>
+                                <div class="col-span-2">
+                                    <span class="text-xs text-gray-500 block">Genre</span>
+                                    <span class="text-white text-xs mt-1 block" id="info-genre">N/A</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Info Details & Download Links -->
+                    <div class="md:col-span-2 space-y-8">
+                        <div class="space-y-4">
+                            <h1 id="detail-title" class="text-3xl sm:text-5xl font-extrabold font-display text-white leading-tight tracking-tight">Kanthara</h1>
+                            
+                            <!-- Cast & Director block -->
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-sm text-gray-400">
+                                <span class="flex items-center gap-1.5"><i data-lucide="user-check" class="w-4 h-4 text-brand-red"></i> <b>Director:</b> <span id="detail-director" class="text-white">N/A</span></span>
+                                <span class="hidden sm:inline text-white/10">|</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4 text-brand-red"></i> <b>Cast:</b> <span id="detail-stars" class="text-white">N/A</span></span>
+                            </div>
+                        </div>
+
+                        <!-- Synopsis Plot -->
+                        <div class="space-y-3">
+                            <h3 class="text-base uppercase text-brand-red font-bold tracking-widest font-display text-xs">Plot Summary</h3>
+                            <p id="detail-plot" class="text-gray-300 text-sm sm:text-base leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac lacus at arcu efficitur varius vel non tellus. Suspendisse pulvinar magna vitae libero eleifend efficitur.</p>
+                        </div>
+
+                        <!-- DOWNLOAD FORMAT LINKS -->
+                        <div class="space-y-5 bg-[#0F0F0F]/80 border border-white/[0.04] p-6 rounded-xl relative">
+                            <!-- Glowing ring indicators -->
+                            <div class="absolute inset-0 border border-brand-red/10 rounded-xl pointer-events-none"></div>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-white/[0.04] pb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="p-2 bg-brand-red/10 text-brand-red rounded-lg"><i data-lucide="hard-drive" class="w-5 h-5"></i></span>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-white tracking-wide uppercase">File Format Options</h3>
+                                        <p class="text-[11px] text-gray-500">Select pre-compiled formats to send automatically in bot</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs bg-green-500/10 border border-green-500/20 text-green-500 px-2.5 py-1 rounded-full font-bold uppercase tracking-wider block sm:inline-block w-fit">Parity Sync Ok</span>
+                            </div>
+
+                            <!-- Loader for file rows -->
+                            <div id="detail-files-loader" class="flex flex-col items-center justify-center py-6 space-y-2">
+                                <div class="w-6 h-6 border-2 border-brand-red border-t-transparent rounded-full animate-spin"></div>
+                                <p class="text-xs text-gray-500">Matching download links...</p>
+                            </div>
+
+                            <!-- Empty file formats state -->
+                            <div id="detail-files-empty" class="hidden text-center py-8 text-gray-500 text-sm space-y-2">
+                                <p>⚠️ No raw download formats found for this title.</p>
+                                <p class="text-xs text-gray-600">The file might have been unsynced from DB. Try triggering sync in your bot.</p>
+                            </div>
+
+                            <!-- Files Links List -->
+                            <div id="detail-files-list" class="space-y-3 hidden">
+                                <!-- Elements generated dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inner Page 404 / Movie Not Found State (hides/shows dynamically instead of full page redirection) -->
+                <div id="movie-not-found" class="hidden text-center py-16 px-6 bg-[#181818] border border-white/[0.04] rounded-2xl max-w-lg mx-auto space-y-6 my-12 animate-fade-in">
+                    <div class="w-16 h-16 bg-brand-red/10 border border-brand-red/20 rounded-full flex items-center justify-center mx-auto text-brand-red">
+                        <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h2 class="text-xl sm:text-2xl font-bold font-display text-white">Movie Listing Not Found</h2>
+                        <p class="text-xs sm:text-sm text-gray-400 max-w-sm mx-auto leading-relaxed">
+                            The requested title could not be retrieved. It may have been unlinked or deleted from the backend catalog database.
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="navigateTo('/website')" class="w-full bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all transform active:scale-95 shadow-lg shadow-brand-red/10">
+                            <i data-lucide="home" class="w-4 h-4"></i>
+                            <span>Return to Home Catalog</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent 5 Uploads Section -->
+                <div id="detail-recent-uploads" class="mt-12 space-y-6 pt-10 border-t border-white/[0.06]">
+                    <div class="flex items-center justify-between border-b border-white/[0.04] pb-3">
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-extrabold font-display text-white tracking-tight">Recent Uploads</h3>
+                            <p class="text-xs text-gray-500 mt-1">Other recently added digital releases you might enjoy.</p>
+                        </div>
+                        <span class="text-xs bg-brand-red/10 border border-brand-red/20 text-brand-red px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">New</span>
+                    </div>
+                    <div id="detail-recent-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 pb-6 animate-fade-in">
+                        <!-- Dynamic content of 5 movie cards goes here -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer Component -->
+    <footer id="main-footer" class="bg-[#0A0A0A] border-t border-white/[0.05] py-8 mt-12 text-center space-y-4 text-xs sm:text-sm text-gray-500 transition-all duration-300">
+        <p class="text-gray-400">Copyright &copy; 2026 <span class="font-bold text-white text-foo">Movie Time System</span>. All rights reserved.</p>
+        <p class="max-w-md mx-auto text-[11px] text-gray-600 leading-relaxed px-4">All movie catalog indices are parsed from open source databases and hosted on Telegram networks. Deep linking processes securely handle final file deliverables without hosting pirate streams locally.</p>
+        <div class="flex items-center justify-center gap-4 text-brand-red font-medium pt-2">
+            <a href="https://t.me/" target="_blank" id="contact-link" class="hover:underline">Contact Operator</a>
+            <span>&bull;</span>
+            <a href="https://t.me/" target="_blank" id="support-link" class="hover:underline">Bot Help Support</a>
+        </div>
+    </footer>
+
+    <!-- CLIENT ROUTER & DATA INJECTOR SCRIPT -->
+    <script>
+        const serverUrl = "https://ominous-space-invention-4qv7qq65452j9q5-3000.app.github.dev"; // Replace with your actual server URL
+        // Global State Variables
+        let currentPage = 1;
+        let totalPages = 1;
+        let currentSearchQuery = "";
+        let botUsernameClient = "movie_bot_username";
+        const itemsPerPage = 30; // Forced paginator limit of 30
+
+        // URL Slugifier Helper
+        function toSlug(title) {
+            if (!title) return "";
+            return title
+                .toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9\s-]/g, "")
+                .replace(/[\s-]+/g, "_");
+        }
+
+        // Initialize Lucide Icons helper
+        function initIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // Deep connection triggers
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            parseUrlParams();
+            fetchBotInfo();
+            setupSearchListeners();
+            // Start the route parser
+            routeHandler();
+            // Handle browser navigation (back/forward clicks)
+            window.onpopstate = () => {
+                parseUrlParams();
+                routeHandler();
+            };
+        });
+
+        // Initialize theme toggler and localStorage sync
+        function initTheme() {
+            const toggle = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-sun-icon');
+            const moonIcon = document.getElementById('theme-moon-icon');
+
+            const storedTheme = localStorage.getItem('site_theme') || 'dark';
+
+            const applyTheme = (theme) => {
+                if (theme === 'bright') {
+                    document.body.classList.add('theme-bright');
+                    if (sunIcon) sunIcon.classList.remove('hidden');
+                    if (moonIcon) moonIcon.classList.add('hidden');
+                    if (toggle) {
+                        toggle.classList.remove('bg-[#181818]', 'border-white/[0.08]', 'text-gray-400');
+                        toggle.classList.add('bg-white', 'border-gray-200', 'text-gray-700');
+                    }
+                } else {
+                    document.body.classList.remove('theme-bright');
+                    if (sunIcon) sunIcon.classList.add('hidden');
+                    if (moonIcon) moonIcon.classList.remove('hidden');
+                    if (toggle) {
+                        toggle.classList.add('bg-[#181818]', 'border-white/[0.08]', 'text-gray-400');
+                        toggle.classList.remove('bg-white', 'border-gray-200', 'text-gray-700');
+                    }
+                }
+                localStorage.setItem('site_theme', theme);
+                initIcons();
+            };
+
+            applyTheme(storedTheme);
+
+            if (toggle) {
+                toggle.onclick = () => {
+                    const isBright = document.body.classList.contains('theme-bright');
+                    applyTheme(isBright ? 'dark' : 'bright');
+                };
+            }
+        }
+
+        // Parse query params for search state, page index, and Telegram user tracking
+        function parseUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Capture and cache Telegram user/chat IDs for direct webapp delivery
+            const userIdInput = params.get('userId') || params.get('user_id') || params.get('chatId') || params.get('chat_id') || params.get('tg_id');
+            if (userIdInput) {
+                localStorage.setItem('telegram_user_id', userIdInput);
+                console.info("Matched Telegram UID:", userIdInput);
+            }
+
+            // Parse current page index
+            const pageVal = parseInt(params.get('page'));
+            if (!isNaN(pageVal) && pageVal > 0) {
+                currentPage = pageVal;
+            } else {
+                currentPage = 1;
+            }
+
+            // Parse search queries
+            const searchVal = params.get('search');
+            if (searchVal) {
+                currentSearchQuery = searchVal;
+            } else {
+                currentSearchQuery = "";
+            }
+        }
+
+        // Push current query state back into current browser history without reloading
+        function updateUrlParams() {
+            const url = new URL(window.location.href);
+            if (currentPage > 1) {
+                url.searchParams.set('page', currentPage);
+            } else {
+                url.searchParams.delete('page');
+            }
+            if (currentSearchQuery) {
+                url.searchParams.set('search', currentSearchQuery);
+            } else {
+                url.searchParams.delete('search');
+            }
+            const storedUid = localStorage.getItem('telegram_user_id');
+            if (storedUid) {
+                url.searchParams.set('userId', storedUid);
+            }
+            window.history.pushState(null, "", url.pathname + url.search);
+        }
+
+        // Trigger botUsername from Server
+        async function fetchBotInfo() {
+            try {
+                const response = await fetch(`${serverUrl}/api/bot-info`);
+                const result = await response.json();
+                if (result.success && result.botUsername) {
+                    botUsernameClient = result.botUsername;
+                    // Update header telegram button href
+                    const tgLink = document.getElementById('telegram-link');
+                    if (tgLink) tgLink.href = `https://t.me/${botUsernameClient}`;
+                    
+                    const contactLink = document.getElementById('contact-link');
+                    if (contactLink) contactLink.href = `https://t.me/${botUsernameClient}`;
+                    
+                    const supportLink = document.getElementById('support-link');
+                    if (supportLink) supportLink.href = `https://t.me/${botUsernameClient}`;
+                }
+            } catch (err) {
+                console.warn('Could not fetch bot information from server:', err);
+            }
+        }
+
+        // Router matcher mapping URI values to frontend states
+        function routeHandler() {
+            const path = window.location.pathname;
+            const movieMatch = path.match(/\/movie\/([^/]+)/);
+
+            if (movieMatch) {
+                // Show Movie Detail Page
+                const movieIdOrSlug = movieMatch[1];
+                renderDetailPage(movieIdOrSlug);
+            } else {
+                // Show Main Dashboard Grid
+                renderIndexPage();
+            }
+        }
+
+        // SPA Navigation Helper
+        function navigateTo(url) {
+            window.history.pushState(null, "", url);
+            routeHandler();
+            // Scroll smoothly to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Setup click-based Event Listeners for Search Input (No more debounce triggers!)
+        function setupSearchListeners() {
+            const desktopSearch = document.getElementById('search-input');
+            const mobileSearch = document.getElementById('search-input-mobile');
+            const desktopBtn = document.getElementById('search-btn');
+            const mobileBtn = document.getElementById('search-btn-mobile');
+
+            const handleTriggerSearch = (val) => {
+                currentSearchQuery = val.trim();
+                currentPage = 1;
+                updateUrlParams();
+                fetchMovies();
+            };
+
+            if (desktopSearch) {
+                desktopSearch.value = currentSearchQuery;
+            }
+            if (mobileSearch) {
+                mobileSearch.value = currentSearchQuery;
+            }
+
+            if (desktopBtn && desktopSearch) {
+                desktopBtn.onclick = () => handleTriggerSearch(desktopSearch.value);
+                desktopSearch.onkeydown = (e) => {
+                    if (e.key === 'Enter') handleTriggerSearch(desktopSearch.value);
+                };
+            }
+
+            if (mobileBtn && mobileSearch) {
+                mobileBtn.onclick = () => handleTriggerSearch(mobileSearch.value);
+                mobileSearch.onkeydown = (e) => {
+                    if (e.key === 'Enter') handleTriggerSearch(mobileSearch.value);
+                };
+            }
+        }
+
+        // Function wrapper for Home route
+        function renderIndexPage() {
+            document.getElementById('view-grid').classList.remove('hidden');
+            document.getElementById('view-details').classList.add('hidden');
+            
+            // Clean active detail content
+            document.getElementById('movie-details-content').classList.add('hidden');
+            document.getElementById('movie-loader').classList.remove('hidden');
+
+            // Set search values if back navigation occurred
+            const deskSearch = document.getElementById('search-input');
+            const mobSearch = document.getElementById('search-input-mobile');
+            if (deskSearch) deskSearch.value = currentSearchQuery;
+            if (mobSearch) mobSearch.value = currentSearchQuery;
+
+            fetchMovies();
+        }
+
+        // Fetch paginated movie entries
+        async function fetchMovies() {
+            const loader = document.getElementById('loader-grid');
+            const grid = document.getElementById('movies-container');
+            const emptyState = document.getElementById('empty-grid');
+            const pagination = document.getElementById('pagination-container');
+            const hero = document.getElementById('hero-section');
+
+            // Instantly clear current movies and inject pulsing skeleton placeholders to optimize visual rendering speed and eliminate stale content lingering
+            grid.innerHTML = "";
+            grid.classList.remove('opacity-40');
+            if (loader) loader.classList.add('hidden');
+            emptyState.classList.add('hidden');
+
+            let skeletonsHtml = "";
+            for (let i = 0; i < itemsPerPage; i++) {
+                skeletonsHtml += `
+                <div class="bg-brand-cardBg/50 border border-white/[0.04] p-3 rounded-xl animate-pulse flex flex-col justify-between h-[340px]">
+                    <div class="relative overflow-hidden rounded-lg aspect-[2/3] bg-white/5 flex items-center justify-center"></div>
+                    <div class="mt-3.5 space-y-2">
+                        <div class="h-4 bg-white/10 rounded w-3/4"></div>
+                        <div class="flex items-center justify-between pt-1">
+                            <div class="h-3 bg-white/5 rounded w-1/4"></div>
+                            <div class="h-3 bg-white/5 rounded w-1/5"></div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+            grid.innerHTML = skeletonsHtml;
+
+            try {
+                const response = await fetch(`${serverUrl}/api/movies?page=${currentPage}&limit=${itemsPerPage}&search=${encodeURIComponent(currentSearchQuery)}`);
+                const result = await response.json();
+
+                if (loader) loader.classList.add('hidden');
+
+                if (!result.success || !result.data || result.data.length === 0) {
+                    if (currentPage > 1) {
+                        console.warn("No results found on page " + currentPage + ". Rolling over to page 1.");
+                        currentPage = 1;
+                        updateUrlParams();
+                        fetchMovies();
+                        return;
+                    }
+                    grid.innerHTML = "";
+                    emptyState.classList.remove('hidden');
+                    pagination.classList.add('hidden');
+                    if (hero) hero.classList.add('hidden');
+                    document.getElementById('grid-header').innerText = `Results for "${currentSearchQuery}"`;
+                    document.getElementById('grid-subheader').innerText = "0 matches found.";
+                    return;
+                }
+
+                // Render Hero spotlight only on first page and when search query is blank (if hero-section exists)
+                if (currentPage === 1 && currentSearchQuery === "") {
+                    renderHeroSpotlight(result.data[0]);
+                    if (hero) hero.classList.remove('hidden');
+                } else {
+                    if (hero) hero.classList.add('hidden');
+                }
+
+                // Update catalog stats
+                document.getElementById('stat-total').innerText = result.pagination.totalResults || result.data.length;
+
+                // Update headers text
+                if (currentSearchQuery !== "") {
+                    document.getElementById('grid-header').innerText = "Search Results";
+                    document.getElementById('grid-subheader').innerText = `Filtered items matching: "${currentSearchQuery}"`;
+                } else {
+                    document.getElementById('grid-header').innerText = "Browse Movies";
+                    document.getElementById('grid-subheader').innerText = "Explore our library of high-speed digital releases.";
+                }
+
+                // Inject Movie Cards
+                let cardsHtml = "";
+                result.data.forEach(m => {
+                    const posterUrl = (m.poster && m.poster !== "N/A" && m.poster.startsWith("http")) 
+                        ? m.poster 
+                        : `https://placehold.co/300x450/111827/FFFFFF/png?text=${encodeURIComponent(m.title)}`;
+
+                    const ratingBadge = m.imdbRating && m.imdbRating !== "N/A"
+                        ? `<span class="bg-black/75 backdrop-blur-sm text-amber-500 font-bold text-[11px] px-2 py-0.5 rounded border border-white/10 flex items-center gap-1"><i data-lucide="star" class="w-3 h-3 fill-current"></i>${m.imdbRating}</span>`
+                        : '';
+
+                    const yearTag = m.year && m.year !== "N/A"
+                        ? `<span class="text-[11px] text-gray-400 font-medium">${m.year}</span>`
+                        : '';
+
+                    const cardSlug = toSlug(m.title) + (m.year && m.year !== "N/A" ? "_" + toSlug(m.year) : "");
+
+                    cardsHtml += `
+                    <div onclick="navigateTo('/movie/${cardSlug}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between">
+                        <div class="relative overflow-hidden rounded-lg aspect-[2/3] bg-brand-darkBg flex items-center justify-center">
+                            <img src="${posterUrl}" alt="${m.title}" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition duration-300" referrerPolicy="no-referrer">
+                            <div class="absolute top-2 right-2 flex flex-col gap-1 z-10">
+                                ${ratingBadge}
+                            </div>
+                        </div>
+                        <div class="mt-3.5 space-y-1">
+                            <h3 class="font-bold text-sm text-white group-hover:text-brand-red transition duration-300 truncate tracking-tight" title="${m.title}">${m.title}</h3>
+                            <div class="flex items-center justify-between text-xs pt-1">
+                                ${yearTag}
+                                <span class="bg-white/5 border border-white/[0.05] text-[10px] text-gray-400 font-bold uppercase tracking-wide px-1.5 py-0.5 rounded">${m.type || 'Movie'}</span>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                });
+
+                grid.innerHTML = cardsHtml;
+                initIcons();
+
+                // Setup Pagination controls State
+                totalPages = result.pagination.totalPages;
+                currentPage = result.pagination.currentPage;
+
+                document.getElementById('pag-current').innerText = currentPage;
+                document.getElementById('pag-total').innerText = totalPages;
+
+                document.getElementById('pag-prev').disabled = (currentPage <= 1);
+                document.getElementById('pag-next').disabled = false; // Always enabled to support rollover to dashboard!
+
+                if (totalPages > 1) {
+                    pagination.classList.remove('hidden');
+                } else {
+                    pagination.classList.add('hidden');
+                }
+
+            } catch (err) {
+                console.error('Error fetching movies data:', err);
+                loader.classList.add('hidden');
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-sm text-red-500">Could not retrieve movie lists. Check server connection logs.</div>`;
+            }
+        }
+
+        // Render top hero spotlight block
+        function renderHeroSpotlight(movie) {
+            if (!movie) return;
+            const heroSection = document.getElementById('hero-section');
+            if (!heroSection) return;
+
+            const heroTitle = document.getElementById('hero-title');
+            const heroPlot = document.getElementById('hero-plot');
+            const heroRating = document.getElementById('hero-rating');
+            const heroYear = document.getElementById('hero-year');
+            const heroGenre = document.getElementById('hero-genre');
+            const heroPoster = document.getElementById('hero-poster');
+            const heroCta = document.getElementById('hero-cta');
+
+            if (!heroTitle || !heroPlot || !heroRating || !heroYear || !heroGenre || !heroPoster || !heroCta) {
+                console.warn('Hero spotlight markup is missing. Skipping hero render.');
+                return;
+            }
+
+            heroTitle.innerText = movie.title;
+            heroPlot.innerText = movie.plot || movie.description || "No summary details compiled yet. Click to inspect format downloads.";
+            heroYear.innerText = movie.year || "N/A";
+            
+            const cleanGenre = movie.genre && movie.genre !== "N/A" ? movie.genre.split(',')[0].trim() : "Featured";
+            heroGenre.innerText = cleanGenre;
+
+            if (movie.imdbRating && movie.imdbRating !== "N/A") {
+                heroRating.innerHTML = `<i data-lucide="star" class="w-4 h-4 fill-current"></i> ${movie.imdbRating}`;
+                heroRating.classList.remove('hidden');
+            } else {
+                heroRating.classList.add('hidden');
+            }
+
+            if (movie.poster && movie.poster !== "N/A" && movie.poster.startsWith("http")) {
+                heroPoster.src = movie.poster;
+            } else {
+                heroPoster.src = `https://placehold.co/300x450/111827/FFFFFF/png?text=${encodeURIComponent(movie.title)}`;
+            }
+
+            const heroSlug = toSlug(movie.title) + (movie.year && movie.year !== "N/A" ? "_" + toSlug(movie.year) : "");
+            heroCta.onclick = () => navigateTo(`/movie/${heroSlug}`);
+            initIcons();
+        }
+
+        // Clear filter utility
+        function clearSearch() {
+            currentSearchQuery = "";
+            currentPage = 1;
+            const deskInput = document.getElementById('search-input');
+            const mobInput = document.getElementById('search-input-mobile');
+            if (deskInput) deskInput.value = "";
+            if (mobInput) mobInput.value = "";
+            updateUrlParams();
+            fetchMovies();
+        }
+
+        // Scroll current page up when pagination triggers
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Pagination Action Helpers
+        function handlePrevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+            } else {
+                // Return fallback to home/dashboard
+                currentPage = 1;
+            }
+            updateUrlParams();
+            fetchMovies();
+            scrollToTop();
+        }
+
+        function handleNextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+            } else {
+                // User requirement: "Otherwise, render on the dashboard or the first page."
+                currentPage = 1;
+            }
+            updateUrlParams();
+            fetchMovies();
+            scrollToTop();
+        }
+
+        // Setup visibility state of Direct Send buttons
+        function setupDirectDeliveryStates() {
+            const storedUid = localStorage.getItem('telegram_user_id');
+            const btns = document.querySelectorAll('.direct-send-btn');
+            if (storedUid && btns) {
+                btns.forEach(b => {
+                    b.classList.remove('hidden');
+                });
+            }
+        }
+
+        // Dynamic post method to serve telegram files securely and display intuitive feedback
+        async function sendDirectFile(fileId, btnElement) {
+            const storedUid = localStorage.getItem('telegram_user_id');
+            if (!storedUid) {
+                return;
+            }
+
+            const originalContent = btnElement.innerHTML;
+            btnElement.disabled = true;
+            btnElement.innerHTML = `<span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span> Sending...`;
+
+            try {
+                const response = await fetch(`${serverUrl}/api/send-telegram-file`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chatId: storedUid, fileId: fileId })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    btnElement.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    btnElement.classList.add('bg-blue-600');
+                    btnElement.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Sent!`;
+                    initIcons();
+                    setTimeout(() => {
+                        btnElement.classList.add('bg-green-600', 'hover:bg-green-700');
+                        btnElement.classList.remove('bg-blue-600');
+                        btnElement.innerHTML = originalContent;
+                        btnElement.disabled = false;
+                        initIcons();
+                    }, 5000);
+                } else {
+                    throw new Error(result.error || "Delivery failed");
+                }
+            } catch (err) {
+                console.error("Direct delivery error:", err);
+                btnElement.classList.remove('bg-green-600', 'hover:bg-green-700');
+                btnElement.classList.add('bg-[#B81D24]');
+                btnElement.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4"></i> Failed`;
+                initIcons();
+                setTimeout(() => {
+                    btnElement.classList.add('bg-green-600', 'hover:bg-green-700');
+                    btnElement.classList.remove('bg-[#B81D24]');
+                    btnElement.innerHTML = originalContent;
+                    btnElement.disabled = false;
+                    initIcons();
+                }, 5000);
+            }
+        }
+
+        // Route: Render Movie Detail screen
+        async function renderDetailPage(movieIdOrSlug) {
+            document.getElementById('view-grid').classList.add('hidden');
+            document.getElementById('view-details').classList.remove('hidden');
+            const heroSection = document.getElementById('hero-section');
+            if (heroSection) {
+                heroSection.classList.add('hidden');
+            }
+
+            const loader = document.getElementById('movie-loader');
+            const card = document.getElementById('movie-details-content');
+            const notFoundEl = document.getElementById('movie-not-found');
+            const recentEl = document.getElementById('detail-recent-uploads');
+
+            loader.classList.remove('hidden');
+            card.classList.add('hidden');
+            if (notFoundEl) notFoundEl.classList.add('hidden');
+            if (recentEl) recentEl.classList.add('hidden');
+
+            try {
+                // Parallel fetch for Movie main details, linked download format files, and latest 5 movies
+                const [movieRes, filesRes, recentRes] = await Promise.all([
+                    fetch(`${serverUrl}/api/movies/${movieIdOrSlug}`),
+                    fetch(`${serverUrl}/api/movies/${movieIdOrSlug}/files`),
+                    fetch(`${serverUrl}/api/movies?page=1&limit=10`)
+                ]);
+
+                const movieInfo = await movieRes.json();
+                const filesInfo = await filesRes.json();
+                const recentInfo = await recentRes.json();
+
+                loader.classList.add('hidden');
+
+                if (!movieInfo.success || !movieInfo.data) {
+                    if (notFoundEl) {
+                        notFoundEl.classList.remove('hidden');
+                    } else {
+                        window.location.href = "/notfound.html";
+                    }
+                    initIcons();
+                    return;
+                }
+
+                const movie = movieInfo.data;
+                if (recentEl) recentEl.classList.remove('hidden');
+
+                // Render latest 5 uploads
+                const recentGrid = document.getElementById('detail-recent-grid');
+                if (recentGrid && recentInfo.success && recentInfo.data) {
+                    let recentHtml = "";
+                    // filter out the current movie so they don't see the same movie in recommendations catalog
+                    const filteredRecent = recentInfo.data.filter(m => m.id !== movie.id).slice(0, 10);
+                    
+                    filteredRecent.forEach(m => {
+                        const posterUrl = (m.poster && m.poster !== "N/A" && m.poster.startsWith("http")) 
+                            ? m.poster 
+                            : `https://placehold.co/300x450/111827/FFFFFF/png?text=${encodeURIComponent(m.title)}`;
+
+                        const slugPath = toSlug(m.title) + (m.year && m.year !== "N/A" ? "_" + toSlug(m.year) : "");
+                        
+                        recentHtml += `
+                        <div onclick="navigateTo('/movie/${slugPath}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                            <div class="relative overflow-hidden rounded-lg aspect-[2/3] bg-brand-darkBg flex items-center justify-center">
+                                <img loading="lazy" src="${posterUrl}" alt="${m.title}" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition duration-300" referrerPolicy="no-referrer">
+                            </div>
+                            <div class="mt-2.5">
+                                <h4 class="font-bold text-xs text-white group-hover:text-brand-red transition duration-300 truncate tracking-tight" title="${m.title}">${m.title}</h4>
+                                <span class="text-[10px] text-gray-400 font-medium">${m.year || 'N/A'}</span>
+                            </div>
+                        </div>
+                        `;
+                    });
+                    
+                    recentGrid.innerHTML = recentHtml || `<div class="col-span-full py-6 text-center text-xs text-gray-500">No recent uploads found.</div>`;
+                }
+                const files = filesInfo.success ? filesInfo.data : [];
+
+                // Bind elements mapping
+                document.getElementById('detail-title').innerText = movie.title;
+                document.getElementById('detail-plot').innerText = movie.plot || movie.description || "Plot synopsis not updated on database yet.";
+                document.getElementById('detail-director').innerText = movie.director || "N/A";
+                document.getElementById('detail-stars').innerText = movie.stars || "N/A";
+
+                document.getElementById('info-year').innerText = movie.year || "N/A";
+                document.getElementById('info-type').innerText = movie.type || "MOVIE";
+                document.getElementById('info-genre').innerText = movie.genre || "N/A";
+
+                // Setup Ratings Badge
+                if (movie.imdbRating && movie.imdbRating !== "N/A") {
+                    document.getElementById('detail-rating').innerText = movie.imdbRating;
+                    document.getElementById('detail-rating-container').classList.remove('hidden');
+                } else {
+                    document.getElementById('detail-rating-container').classList.add('hidden');
+                }
+
+                // Poster Image binding
+                const detailPoster = document.getElementById('detail-poster');
+                if (movie.poster && movie.poster !== "N/A" && movie.poster.startsWith("http")) {
+                    detailPoster.src = movie.poster;
+                } else {
+                    detailPoster.src = `https://placehold.co/300x450/111827/FFFFFF/png?text=${encodeURIComponent(movie.title)}`;
+                }
+
+                // Bind raw quality links inside formats card
+                const filesLoader = document.getElementById('detail-files-loader');
+                const filesEmpty = document.getElementById('detail-files-empty');
+                const filesList = document.getElementById('detail-files-list');
+
+                filesLoader.classList.add('hidden');
+                filesEmpty.classList.add('hidden');
+                filesList.classList.add('hidden');
+
+                if (files.length === 0) {
+                    filesEmpty.classList.remove('hidden');
+                } else {
+                    // Sorting logic inside files matching resolutions list
+                    const resOrder = { "480p": 1, "720p": 2, "1080p": 3, "2160p": 4, "4k": 5 };
+                    const sortedFiles = [...files].sort((a, b) => {
+                        const aRes = a.resolution ? a.resolution.toLowerCase() : "";
+                        const bRes = b.resolution ? b.resolution.toLowerCase() : "";
+                        return (resOrder[aRes] || 99) - (resOrder[bRes] || 99);
+                    });
+
+                    let fileRowsHtml = "";
+                    sortedFiles.forEach(f => {
+                        const sizeMB = (f.fileSize / (1024 * 1024)).toFixed(1);
+                        const cleanResolution = f.resolution ? f.resolution.toUpperCase() : "HD";
+                        
+                        // Construct the secure Telegram deep-linking start URL parameter
+                        const deepLink = `https://t.me/${botUsernameClient}?start=movie_${f.id}`;
+
+                        fileRowsHtml += `
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-[#181818] border border-white/[0.04] rounded-xl hover:border-brand-red/40 hover:bg-[#202020] transition-all duration-350 gap-4">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-brand-red/10 border border-brand-red/20 text-brand-red text-[10px] font-bold px-2 py-0.5 rounded tracking-wide uppercase">${cleanResolution}</span>
+                                    <span class="text-xs text-gray-500 font-semibold">${sizeMB} MB</span>
+                                </div>
+                                <h4 class="text-xs sm:text-sm font-bold text-white tracking-tight leading-snug break-all" title="${f.title}">${f.title}</h4>
+                            </div>
+                            
+                            <!-- Actions -->
+                            <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto shrink-0">
+                                <!-- Direct Telegram Delivery Button (visible only if stored tg UID matches) -->
+                                <button onclick="sendDirectFile('${f.id}', this)" class="direct-send-btn hidden w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-all transform active:scale-95 shadow-md">
+                                    <i data-lucide="send" class="w-4 h-4"></i> Send to My Chat
+                                </button>
+
+                                <a href="${deepLink}" target="_blank" class="w-full sm:w-auto bg-[#2C2C2C] hover:bg-brand-red text-white hover:shadow-lg hover:shadow-brand-red/10 text-xs sm:text-sm font-bold px-5 py-3 sm:py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all transform active:scale-95">
+                                    <i data-lucide="send-to-back" class="w-4 h-4"></i> Get File In Bot
+                                </a>
+                            </div>
+                        </div>
+                        `;
+                    });
+
+                    filesList.innerHTML = fileRowsHtml;
+                    filesList.classList.remove('hidden');
+                    
+                    // Activate visibility check
+                    setupDirectDeliveryStates();
+                }
+
+                card.classList.remove('hidden');
+                initIcons();
+
+            } catch (err) {
+                console.error('Error fetching detail stats matching page:', err);
+                loader.classList.add('hidden');
+                card.classList.add('hidden');
+                if (notFoundEl) {
+                    notFoundEl.classList.remove('hidden');
+                } else {
+                    window.location.href = "/notfound.html";
+                }
+                initIcons();
+            }
+        }
+    </script>
+</body>
+</html>
