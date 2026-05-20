@@ -177,7 +177,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-0 md:h-18 flex flex-wrap md:flex-nowrap items-center justify-between gap-y-3">
         
         <!-- 1. LOGO: Stays on the left (order-1) -->
-        <div class="flex items-center gap-2 cursor-pointer shrink-0 order-1" onclick="navigateTo('/')" id="nav-logo">
+        <div class="flex items-center gap-2 cursor-pointer shrink-0 order-1" onclick="navigateTo('/bot-web-page/')" id="nav-logo">
             <span class="text-2xl sm:text-3xl font-black font-display text-brand-red tracking-tighter">MOVIE<span class="text-white font-light header-logo-span transition-colors"> TIME</span></span>
             <span class="bg-brand-red/10 text-brand-red text-[10px] font-bold px-1.5 py-0.5 rounded border border-brand-red/20 uppercase tracking-widest hidden lg:inline-block">Web Portal</span>
         </div>
@@ -270,7 +270,7 @@
             <div id="view-details" class="hidden">
                 <!-- Back trigger -->
                 <div class="mb-6">
-                    <button onclick="navigateTo('/')" class="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-400 hover:text-white bg-[#181818] border border-white/[0.08] rounded-full px-4 py-2 transition-all">
+                    <button onclick="navigateTo('/bot-web-page/')" class="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-400 hover:text-white bg-[#181818] border border-white/[0.08] rounded-full px-4 py-2 transition-all">
                         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Catalog
                     </button>
                 </div>
@@ -381,7 +381,7 @@
                         </p>
                     </div>
                     <div class="pt-2">
-                        <button onclick="navigateTo('/')" class="w-full bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all transform active:scale-95 shadow-lg shadow-brand-red/10">
+                        <button onclick="navigateTo('/bot-web-page/')" class="w-full bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all transform active:scale-95 shadow-lg shadow-brand-red/10">
                             <i data-lucide="home" class="w-4 h-4"></i>
                             <span>Return to Home Catalog</span>
                         </button>
@@ -419,7 +419,7 @@
 
     <!-- CLIENT ROUTER & DATA INJECTOR SCRIPT -->
     <script>
-        const serverUrl = "https://ominous-space-invention-4qv7qq65452j9q5-3000.app.github.dev"; // Replace with your actual server URL
+        const serverUrl = "https://telegram-bot-pgd8.onrender.com"; // Replace with your actual server URL
         // Global State Variables
         let currentPage = 1;
         let totalPages = 1;
@@ -738,7 +738,7 @@
                     const cardSlug = toSlug(m.title) + (m.year && m.year !== "N/A" ? "_" + toSlug(m.year) : "");
 
                     cardsHtml += `
-                    <div onclick="navigateTo('/movie/${cardSlug}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between">
+                    <div onclick="navigateTo('/bot-web-page/movie/${cardSlug}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between">
                         <div class="relative overflow-hidden rounded-lg aspect-[2/3] bg-brand-darkBg flex items-center justify-center">
                             <img src="${posterUrl}" alt="${m.title}" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition duration-300" referrerPolicy="no-referrer">
                             <div class="absolute top-2 right-2 flex flex-col gap-1 z-10">
@@ -822,7 +822,7 @@
             }
 
             const heroSlug = toSlug(movie.title) + (movie.year && movie.year !== "N/A" ? "_" + toSlug(movie.year) : "");
-            heroCta.onclick = () => navigateTo(`/movie/${heroSlug}`);
+            heroCta.onclick = () => navigateTo(`/bot-web-page/movie/${heroSlug}`);
             initIcons();
         }
 
@@ -989,7 +989,7 @@
                         const slugPath = toSlug(m.title) + (m.year && m.year !== "N/A" ? "_" + toSlug(m.year) : "");
                         
                         recentHtml += `
-                        <div onclick="navigateTo('/movie/${slugPath}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                        <div onclick="navigateTo('/bot-web-page/movie/${slugPath}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
                             <div class="relative overflow-hidden rounded-lg aspect-[2/3] bg-brand-darkBg flex items-center justify-center">
                                 <img loading="lazy" src="${posterUrl}" alt="${m.title}" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition duration-300" referrerPolicy="no-referrer">
                             </div>
