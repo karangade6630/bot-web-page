@@ -488,6 +488,8 @@
             setupSearchListeners();
             // Start the route parser
             routeHandler();
+            // Start background poll to detect catalog changes and keep local storage/UI in sync
+            startMoviesPoll(30000);
             // Handle browser navigation (back/forward clicks)
             window.onpopstate = () => {
                 parseUrlParams();
@@ -865,11 +867,48 @@
                     pagination.classList.add('hidden');
                 }
 
+                // Save lightweight metadata about the current catalog to localStorage
+                try {
+                    const total = result.pagination && typeof result.pagination.totalResults !== 'undefined'
+                        ? result.pagination.totalResults
+                        : (Array.isArray(result.data) ? result.data.length : 0);
+                    localStorage.setItem('movies_total', String(total));
+                    localStorage.setItem('movies_last_fetch', String(Date.now()));
+                } catch (e) {
+                    console.warn('Could not update movies metadata in localStorage:', e);
+                }
+
             } catch (err) {
                 console.error('Error fetching movies data:', err);
                 loader.classList.add('hidden');
                 grid.innerHTML = `<div class="col-span-full text-center py-12 text-sm text-red-500">Could not retrieve movie lists. Check server connection logs.</div>`;
             }
+        }
+
+        // Periodic poll to detect backend catalog changes and refresh UI/cache
+        function startMoviesPoll(intervalMs = 30000) {
+            // Do nothing in environments without fetch
+            if (typeof fetch === 'undefined') return;
+
+            // Poll in the background and only request a minimal payload (first item)
+            setInterval(async () => {
+                try {
+                    const sQuery = encodeURIComponent(currentSearchQuery || '');
+                    const resp = await fetch(`${serverUrl}/api/movies`);
+                    if (!resp.ok) return;
+                    const data = await resp.json();
+                    const newTotal = data?.pagination?.totalResults ?? (Array.isArray(data.data) ? data.data.length : 0);
+                    const cachedTotal = parseInt(localStorage.getItem('movies_total') || '0', 10);
+                    if (!isNaN(newTotal) && newTotal !== cachedTotal) {
+                        console.info('Detected change in movie catalog (total:', newTotal, 'cached:', cachedTotal, '). Refreshing...');
+                        // Refresh the visible list for the current page/search
+                        fetchMovies();
+                    }
+                } catch (err) {
+                    // Fail silently to avoid noisy logs during intermittent network issues
+                    console.debug('Movies poll error:', err);
+                }
+            }, intervalMs);
         }
 
         // Render top hero spotlight block
