@@ -71,6 +71,11 @@
             border-color: rgba(0, 0, 0, 0.1) !important;
             color: #111827 !important;
         }
+        body.theme-bright #mobile-search-container input {
+            background-color: #FFFFFF !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+            color: #111827 !important;
+        }
         body.theme-bright #hero-section {
             background: linear-gradient(180deg, #E5E7EB 0%, #F3F4F6 100%) !important;
             border-bottom-color: rgba(0, 0, 0, 0.08) !important;
@@ -167,44 +172,40 @@
 <body class="font-sans antialiased min-h-screen flex flex-col selection:bg-brand-red selection:text-white">
 
     <!-- Header Navigation -->
-   <header class="sticky top-0 z-50 bg-[#0F0F0F]/90 backdrop-blur-md border-b border-white/[0.06] transition-all duration-300">
-    <!-- Replaced fixed height with vertical padding for mobile, added flex-wrap -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-0 md:h-18 flex flex-wrap md:flex-nowrap items-center justify-between gap-y-3">
-        
-        <!-- 1. LOGO: Stays on the left (order-1) -->
-        <div class="flex items-center gap-2 cursor-pointer shrink-0 order-1" onclick="navigateHome(true)" id="nav-logo">
-            <span class="text-2xl sm:text-3xl font-black font-display text-brand-red tracking-tighter">MOVIE<span class="text-white font-light header-logo-span transition-colors"> TIME</span></span>
-            <span class="bg-brand-red/10 text-brand-red text-[10px] font-bold px-1.5 py-0.5 rounded border border-brand-red/20 uppercase tracking-widest hidden lg:inline-block">Web Portal</span>
-        </div>
-
-        <!-- 2. ACTION BUTTONS: Moves next to the logo on mobile (order-2), right side on desktop (order-3) -->
-        <div class="flex items-center gap-2 sm:gap-4 shrink-0 order-2 md:order-3">
-            <button id="theme-toggle" class="p-2 sm:p-2.5 rounded-full bg-[#181818] border border-white/[0.08] text-gray-400 hover:text-white hover:bg-brand-hoverBg transition-all flex items-center justify-center cursor-pointer" title="Toggle Bright/Dark Mode" aria-label="Toggle Bright/Dark Mode">
-                <i data-lucide="sun" class="w-4 h-4 hidden" id="theme-sun-icon"></i>
-                <i data-lucide="moon" class="w-4 h-4" id="theme-moon-icon"></i>
-            </button>
-
-            <a href="https://t.me/" target="_blank" id="telegram-link" class="bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-semibold p-2 sm:px-4 sm:py-2.5 rounded-full flex items-center gap-2 transition-all shadow-lg shadow-brand-red/20" title="Open in Telegram">
-                <i data-lucide="send" class="w-4 h-4 fill-current"></i>
-                <span class="hidden sm:inline">Open in Telegram</span>
-            </a>
-        </div>
-
-        <!-- 3. SEARCH BAR: Drops to a new line and takes full width on mobile (order-3), middle on desktop (order-2) -->
-        <div class="w-full order-3 md:order-2 md:w-auto md:flex-1 md:max-w-md md:mx-6 flex items-center gap-2" id="header-search-container">
-            <div class="relative flex-1">
-                <input type="text" id="search-input" placeholder="Search movies..." class="w-full bg-[#181818] border border-white/[0.08] rounded-full py-2.5 sm:py-2 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all">
-                <span class="absolute left-3.5 top-3 sm:top-2.5 text-gray-400"><i data-lucide="search" class="w-4 h-4"></i></span>
+    <header class="sticky top-0 z-50 bg-[#0F0F0F]/90 backdrop-blur-md border-b border-white/[0.06] transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 cursor-pointer shrink-0" onclick="navigateTo('/')" id="nav-logo">
+                <span class="text-2xl sm:text-3xl font-black font-display text-brand-red tracking-tighter">MOVIE<span class="text-white font-light header-logo-span transition-colors"> TIME</span></span>
+                <span class="bg-brand-red/10 text-brand-red text-[10px] font-bold px-1.5 py-0.5 rounded border border-brand-red/20 uppercase tracking-widest hidden lg:inline-block">Web Portal</span>
             </div>
-            <!-- Since it's full width on mobile, we can keep the text label visible on all sizes -->
-            <button id="search-btn" class="bg-brand-red hover:bg-brand-redHover text-white px-5 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1 shrink-0 shadow-md">
-                <span>Search</span>
-            </button>
+
+            <!-- Header Search Bar (Always fixed at the top, perfectly responsive across all views!) -->
+            <div class="flex-1 max-w-[170px] xs:max-w-xs sm:max-w-sm md:max-w-md mx-1 xs:mx-2 sm:mx-6 flex items-center gap-1.5 sm:gap-2" id="header-search-container">
+                <div class="relative flex-1">
+                    <input type="text" id="search-input" placeholder="Search movies..." class="w-full bg-[#181818] border border-white/[0.08] rounded-full py-2 pl-8 sm:pl-10 pr-3 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all">
+                    <span class="absolute left-2.5 sm:left-3.5 top-2.5 text-gray-400"><i data-lucide="search" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></span>
+                </div>
+                <button id="search-btn" class="bg-brand-red hover:bg-brand-redHover text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold transition-all flex items-center gap-1 shrink-0 shadow-md">
+                    <span class="hidden xs:inline">Search</span>
+                    <i data-lucide="search" class="w-3.5 h-3.5 xs:hidden"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+                <!-- Theme toggle button -->
+                <button id="theme-toggle" class="p-2 sm:p-2.5 rounded-full bg-[#181818] border border-white/[0.08] text-gray-400 hover:text-white hover:bg-brand-hoverBg transition-all flex items-center justify-center cursor-pointer" title="Toggle Bright/Dark Mode" aria-label="Toggle Bright/Dark Mode">
+                    <i data-lucide="sun" class="w-4 h-4 hidden" id="theme-sun-icon"></i>
+                    <i data-lucide="moon" class="w-4 h-4" id="theme-moon-icon"></i>
+                </button>
+
+                <a href="https://t.me/" target="_blank" id="telegram-link" class="bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-semibold p-2.5 sm:px-4 sm:py-2.5 rounded-full flex items-center gap-2 transition-all shadow-lg shadow-brand-red/20" title="Open in Telegram">
+                    <i data-lucide="send" class="w-4 h-4 fill-current"></i>
+                    <span class="hidden sm:inline">Open in Telegram</span>
+                </a>
+            </div>
         </div>
-        
-    </div>
-</header>
-    
+    </header>
+
     <!-- Main Container -->
     <main class="flex-grow">
         
@@ -265,14 +266,14 @@
             <div id="view-details" class="hidden">
                 <!-- Back trigger -->
                 <div class="mb-6">
-                    <button onclick="navigateHome(true)" class="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-400 hover:text-white bg-[#181818] border border-white/[0.08] rounded-full px-4 py-2 transition-all">
+                    <button onclick="navigateTo('/')" class="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-400 hover:text-white bg-[#181818] border border-white/[0.08] rounded-full px-4 py-2 transition-all">
                         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Catalog
                     </button>
                 </div>
 
                 <div id="movie-loader" class="flex flex-col items-center justify-center py-24 space-y-4">
                     <div class="w-12 h-12 border-4 border-brand-red border-t-transparent rounded-full animate-spin"></div>
-                    <p class="text-sm text-gray-500 font-medium">Loading movie details...</p>
+                    <p class="text-sm text-gray-500 font-medium">Scraping movie fields...</p>
                 </div>
 
                 <div id="movie-details-content" class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 bg-[#181818] border border-white/[0.06] rounded-2xl p-6 sm:p-10 relative overflow-hidden hidden">
@@ -329,79 +330,38 @@
                         </div>
 
                         <!-- DOWNLOAD FORMAT LINKS -->
-                       <!-- Main Card Container -->
-<div class="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0A0A0A]/90 p-5 backdrop-blur-xl transition-all duration-300 hover:border-white/[0.1] sm:p-6">
-    
-    <!-- Subtle Ambient Glow Element -->
-    <div class="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-brand-red/5 blur-[80px] pointer-events-none"></div>
+                        <div class="space-y-5 bg-[#0F0F0F]/80 border border-white/[0.04] p-6 rounded-xl relative">
+                            <!-- Glowing ring indicators -->
+                            <div class="absolute inset-0 border border-brand-red/10 rounded-xl pointer-events-none"></div>
 
-    <!-- Header Section -->
-    <div class="flex flex-col gap-4 border-b border-white/[0.06] pb-5 sm:flex-row sm:items-center sm:justify-between">
-        <div class="flex items-start gap-3.5">
-            <!-- Icon Wrapper -->
-            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-brand-red/20 bg-brand-red/10 text-brand-red shadow-[0_0_20px_rgba(239,68,68,0.1)] sm:h-12 sm:w-12">
-                <i data-lucide="download-cloud" class="h-5 w-5"></i>
-            </div>
-            <!-- Title Group -->
-            <div class="space-y-0.5">
-                <h3 class="text-sm font-bold tracking-tight text-white sm:text-base">File Format Options</h3>
-                <p class="text-xs leading-relaxed text-neutral-400 sm:text-sm">Choose the best quality and send it directly through Telegram.</p>
-            </div>
-        </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-white/[0.04] pb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="p-2 bg-brand-red/10 text-brand-red rounded-lg"><i data-lucide="hard-drive" class="w-5 h-5"></i></span>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-white tracking-wide uppercase">File Format Options</h3>
+                                        <p class="text-[11px] text-gray-500">Select pre-compiled formats to send automatically in bot</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs bg-green-500/10 border border-green-500/20 text-green-500 px-2.5 py-1 rounded-full font-bold uppercase tracking-wider block sm:inline-block w-fit">Parity Sync Ok</span>
+                            </div>
 
-        <!-- Sync Status Badge (Wraps beautifully on mobile) -->
-        <div class="self-start sm:self-center">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.05)]">
-                <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                Parity Sync Ok
-            </span>
-        </div>
-    </div>
+                            <!-- Loader for file rows -->
+                            <div id="detail-files-loader" class="flex flex-col items-center justify-center py-6 space-y-2">
+                                <div class="w-6 h-6 border-2 border-brand-red border-t-transparent rounded-full animate-spin"></div>
+                                <p class="text-xs text-gray-500">Matching download links...</p>
+                            </div>
 
-    <!-- Content Body Area -->
-    <div class="mt-5">
-        <!-- Loader for file rows -->
-        <div id="detail-files-loader" class="flex flex-col items-center justify-center py-10 text-center">
-            <div class="relative flex h-8 w-8 items-center justify-center">
-                <!-- Dual ring smooth loader effect -->
-                <div class="absolute h-full w-full rounded-full border-2 border-brand-red/10"></div>
-                <div class="h-full w-full rounded-full border-2 border-brand-red border-t-transparent animate-spin"></div>
-            </div>
-            <p class="mt-3 text-xs font-semibold text-neutral-400 tracking-wide">Loading file options...</p>
-            <p class="text-[10px] text-neutral-600 mt-0.5">Preparing the best download sources.</p>
-        </div>
+                            <!-- Empty file formats state -->
+                            <div id="detail-files-empty" class="hidden text-center py-8 text-gray-500 text-sm space-y-2">
+                                <p>⚠️ No raw download formats found for this title.</p>
+                                <p class="text-xs text-gray-600">The file might have been unsynced from DB. Try triggering sync in your bot.</p>
+                            </div>
 
-        <!-- Empty file formats state -->
-        <div id="detail-files-empty" class="hidden flex-col items-center justify-center py-12 text-center px-4">
-            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 text-amber-500 border border-amber-500/20 mb-3">
-                <i data-lucide="alert-triangle" class="h-5 w-5"></i>
-            </div>
-            <h4 class="text-xs font-bold text-neutral-200 uppercase tracking-wider">No Formats Found</h4>
-            <p class="mt-1 text-xs text-neutral-500 max-w-xs leading-relaxed">This title might have been unsynced from the database. Try triggering a sync in your bot.</p>
-        </div>
-
-        <!-- Files Links List -->
-        <div id="detail-files-list" class="hidden space-y-2.5">
-            <!-- 
-                JS INJECTION TEMPLATE EXAMPLE:
-                Use this layout structural style inside your Javascript generator for an incredibly clean list row:
-
-                <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.05] hover:border-white/[0.08] transition-all duration-200 group">
-                    <div class="flex items-center gap-3 min-w-0">
-                        <span class="text-[10px] font-black bg-brand-red/10 text-brand-red px-2 py-0.5 rounded-md border border-brand-red/10 shrink-0">MKV</span>
-                        <div class="truncate">
-                            <p class="text-xs font-medium text-white truncate group-hover:text-brand-red transition-colors duration-200">Inception.2010.2160p.REMASTERED.REMUX.HEVC.DoVi.mkv</p>
-                            <p class="text-[10px] text-neutral-500 mt-0.5">14.2 GB • 10-bit • TrueHD 7.1</p>
+                            <!-- Files Links List -->
+                            <div id="detail-files-list" class="space-y-3 hidden">
+                                <!-- Elements generated dynamically by JS -->
+                            </div>
                         </div>
-                    </div>
-                    <button class="p-2 rounded-lg bg-white/5 text-neutral-400 hover:bg-brand-red hover:text-white transition-all duration-200 shrink-0 ml-3">
-                        <i data-lucide="send" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            -->
-        </div>
-    </div>
-</div>
                     </div>
                 </div>
 
@@ -417,7 +377,7 @@
                         </p>
                     </div>
                     <div class="pt-2">
-                        <button onclick="navigateHome(true)" class="w-full bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all transform active:scale-95 shadow-lg shadow-brand-red/10">
+                        <button onclick="navigateTo('/')" class="w-full bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all transform active:scale-95 shadow-lg shadow-brand-red/10">
                             <i data-lucide="home" class="w-4 h-4"></i>
                             <span>Return to Home Catalog</span>
                         </button>
@@ -455,7 +415,7 @@
 
     <!-- CLIENT ROUTER & DATA INJECTOR SCRIPT -->
     <script>
-        const serverUrl = "https://telegram-bot-pgd8.onrender.com"; // Replace with your actual server URL
+        const serverUrl = "https://telegram-bot-pgd8.onrender.com" // Dynamically resolve server origin
         // Global State Variables
         let currentPage = 1;
         let totalPages = 1;
@@ -473,6 +433,49 @@
                 .replace(/[\s-]+/g, "_");
         }
 
+        function extractReleaseTags(title) {
+            const tags = [
+                "NF-WEB",
+                "NF-WB",
+                "NF",
+                "WEB-DL",
+                "WEB",
+                "HDTC",
+                "HEVC",
+                "HTS",
+                "HTDS",
+                "HTPC",
+                "HTCP",
+                "TELESYNC",
+                "TS",
+                "TC",
+                "CAM",
+                "DVDRIP",
+                "HDRIP",
+                "BLURAY",
+                "BDRIP",
+                "HDTV",
+                "HDCAM",
+                "BDR",
+                "WEBRIP",
+                "HC",
+            ];
+            if (typeof title !== "string") return [];
+            const normalized = title.toUpperCase();
+            const matches = [];
+            tags.forEach((tag) => {
+                const parts = tag.split(/[^A-Z0-9]+/).filter(Boolean);
+                const regex = new RegExp(
+                    `\\b${parts.map((part) => part.replace(/[.*+?^${}()|[\\]\\]/g, "\\\\$&")).join("[.\\-_ ]+")}(?:\\b|$)`,
+                    "i"
+                );
+                if (regex.test(normalized) && !matches.includes(tag)) {
+                    matches.push(tag);
+                }
+            });
+            return matches;
+        }
+
         // Initialize Lucide Icons helper
         function initIcons() {
             if (typeof lucide !== 'undefined') {
@@ -488,8 +491,6 @@
             setupSearchListeners();
             // Start the route parser
             routeHandler();
-            // Start background poll to detect catalog changes and keep local storage/UI in sync
-            startMoviesPoll(30000);
             // Handle browser navigation (back/forward clicks)
             window.onpopstate = () => {
                 parseUrlParams();
@@ -563,11 +564,10 @@
             } else {
                 currentSearchQuery = "";
             }
-        }
-
+        }    
         // Push current query state back into current browser history without reloading
-        function updateUrlParams(pathname = window.location.pathname) {
-            const url = new URL(window.location.origin + pathname);
+        function updateUrlParams() {
+            const url = new URL(window.location.href);
             if (currentPage > 1) {
                 url.searchParams.set('page', currentPage);
             } else {
@@ -585,65 +585,22 @@
             window.history.pushState(null, "", url.pathname + url.search);
         }
 
-        function getHomePath() {
-            return window.location.pathname.replace(/\/movie\/[^/]+\/?$/, '/') || '/';
-        }
-
-        function parseResolutionFromTitle(title) {
-    if (!title) return null;
-
-    // Normalize: replace dots, underscores, and dashes with spaces for easier matching
-    const normalized = title.replace(/[._-]/g, ' ').toLowerCase();
-
-    // RegEx patterns
-    const patterns = {
-        '4k': /4k|uhd|2160p/i,
-        '2160p': /2160p/i,
-        '1080p': /1080p|1080/i,
-        '720p': /720p|720/i,
-        '480p': /480p|480/i
-    };
-
-    // Check patterns in descending order of quality
-    if (patterns['4k'].test(normalized)) return '4k';
-    if (patterns['1080p'].test(normalized)) return '1080p';
-    if (patterns['720p'].test(normalized)) return '720p';
-    if (patterns['480p'].test(normalized)) return '480p';
-
-    return null;
-}
-
-        function getBestResolution(file) {
-    // 1. Check existing property first
-    if (file?.resolution) {
-        const value = String(file.resolution).trim().toLowerCase();
-        if (value && !['unknown', 'n/a', 'na'].includes(value)) {
-            return value;
-        }
-    }
-    
-    // 2. Fallback to extracting from title
-    return parseResolutionFromTitle(file?.title) || 'unknown';
-}
-
         // Trigger botUsername from Server
         async function fetchBotInfo() {
             try {
                 const response = await fetch(`${serverUrl}/api/bot-info`);
-                if (!response.ok) {
-                    throw new Error(`bot-info request failed (${response.status})`);
-                }
                 const result = await response.json();
                 if (result.success && result.botUsername) {
                     botUsernameClient = result.botUsername;
+                    // Update header telegram button href
                     const tgLink = document.getElementById('telegram-link');
                     if (tgLink) tgLink.href = `https://t.me/${botUsernameClient}`;
+                    
                     const contactLink = document.getElementById('contact-link');
                     if (contactLink) contactLink.href = `https://t.me/${botUsernameClient}`;
+                    
                     const supportLink = document.getElementById('support-link');
                     if (supportLink) supportLink.href = `https://t.me/${botUsernameClient}`;
-                } else {
-                    console.warn('Bot info API returned invalid response:', result);
                 }
             } catch (err) {
                 console.warn('Could not fetch bot information from server:', err);
@@ -666,51 +623,46 @@
         }
 
         // SPA Navigation Helper
-        function navigateTo(url, updateUrl = true) {
-            if (updateUrl) {
-                updateUrlParams(url);
-            } else {
-                window.history.pushState(null, "", url);
-            }
+        function navigateTo(url) {
+            window.history.pushState(null, "", url);
             routeHandler();
             // Scroll smoothly to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function navigateHome(clearSearch = false) {
-            const homePath = '/bot-web-page/';
-            if (clearSearch) {
-                currentSearchQuery = "";
-                currentPage = 1;
-            }
-            updateUrlParams(homePath);
-            routeHandler();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
         // Setup click-based Event Listeners for Search Input (No more debounce triggers!)
         function setupSearchListeners() {
-            const searchInput = document.getElementById('search-input');
-            const searchBtn = document.getElementById('search-btn');
+            const desktopSearch = document.getElementById('search-input');
+            const mobileSearch = document.getElementById('search-input-mobile');
+            const desktopBtn = document.getElementById('search-btn');
+            const mobileBtn = document.getElementById('search-btn-mobile');
 
             const handleTriggerSearch = (val) => {
-                currentSearchQuery = (val || '').trim();
+                currentSearchQuery = val.trim();
                 currentPage = 1;
-                const homePath = getHomePath();
-                navigateTo(homePath, true);
+                updateUrlParams();
+                fetchMovies();
             };
 
-            if (searchInput) {
-                searchInput.value = currentSearchQuery;
-                searchInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        handleTriggerSearch(searchInput.value);
-                    }
-                });
+            if (desktopSearch) {
+                desktopSearch.value = currentSearchQuery;
+            }
+            if (mobileSearch) {
+                mobileSearch.value = currentSearchQuery;
             }
 
-            if (searchBtn) {
-                searchBtn.addEventListener('click', () => handleTriggerSearch(searchInput?.value || ''));
+            if (desktopBtn && desktopSearch) {
+                desktopBtn.onclick = () => handleTriggerSearch(desktopSearch.value);
+                desktopSearch.onkeydown = (e) => {
+                    if (e.key === 'Enter') handleTriggerSearch(desktopSearch.value);
+                };
+            }
+
+            if (mobileBtn && mobileSearch) {
+                mobileBtn.onclick = () => handleTriggerSearch(mobileSearch.value);
+                mobileSearch.onkeydown = (e) => {
+                    if (e.key === 'Enter') handleTriggerSearch(mobileSearch.value);
+                };
             }
         }
 
@@ -723,8 +675,11 @@
             document.getElementById('movie-details-content').classList.add('hidden');
             document.getElementById('movie-loader').classList.remove('hidden');
 
+            // Set search values if back navigation occurred
             const deskSearch = document.getElementById('search-input');
+            const mobSearch = document.getElementById('search-input-mobile');
             if (deskSearch) deskSearch.value = currentSearchQuery;
+            if (mobSearch) mobSearch.value = currentSearchQuery;
 
             fetchMovies();
         }
@@ -759,18 +714,14 @@
                 `;
             }
             grid.innerHTML = skeletonsHtml;
-            if (loader) loader.classList.remove('hidden');
 
             try {
                 const response = await fetch(`${serverUrl}/api/movies?page=${currentPage}&limit=${itemsPerPage}&search=${encodeURIComponent(currentSearchQuery)}`);
-                if (!response.ok) {
-                    throw new Error(`Movie list request failed (${response.status})`);
-                }
                 const result = await response.json();
 
                 if (loader) loader.classList.add('hidden');
 
-                if (!result.success || !Array.isArray(result.data) || result.data.length === 0) {
+                if (!result.success || !result.data || result.data.length === 0) {
                     if (currentPage > 1) {
                         console.warn("No results found on page " + currentPage + ". Rolling over to page 1.");
                         currentPage = 1;
@@ -800,7 +751,7 @@
 
                 // Update headers text
                 if (currentSearchQuery !== "") {
-                    document.getElementById('grid-header').innerText = `Results for "${currentSearchQuery}"`;
+                    document.getElementById('grid-header').innerText = "Search Results";
                     document.getElementById('grid-subheader').innerText = `Filtered items matching: "${currentSearchQuery}"`;
                 } else {
                     document.getElementById('grid-header').innerText = "Browse Movies";
@@ -815,33 +766,28 @@
                         : `https://placehold.co/300x450/111827/FFFFFF/png?text=${encodeURIComponent(m.title)}`;
 
                     const ratingBadge = m.imdbRating && m.imdbRating !== "N/A"
-                        ? `<span class="bg-black/80 backdrop-blur-sm text-amber-400 font-bold text-[11px] px-2 py-0.5 rounded-full border border-white/10 flex items-center gap-1"><i data-lucide="star" class="w-3 h-3 fill-current"></i>${m.imdbRating}</span>`
+                        ? `<span class="bg-black/75 backdrop-blur-sm text-amber-500 font-bold text-[11px] px-2 py-0.5 rounded border border-white/10 flex items-center gap-1"><i data-lucide="star" class="w-3 h-3 fill-current"></i>${m.imdbRating}</span>`
                         : '';
 
                     const yearTag = m.year && m.year !== "N/A"
                         ? `<span class="text-[11px] text-gray-400 font-medium">${m.year}</span>`
                         : '';
 
-                    const genreTag = m.genre && m.genre !== "N/A"
-                        ? `<span class="text-[11px] text-emerald-400 font-semibold">${m.genre.split(',')[0].trim()}</span>`
-                        : `<span class="text-[11px] text-gray-400">Genre</span>`;
-
                     const cardSlug = toSlug(m.title) + (m.year && m.year !== "N/A" ? "_" + toSlug(m.year) : "");
 
                     cardsHtml += `
-                    <div onclick="navigateTo('/bot-web-page/movie/${cardSlug}')" class="group cursor-pointer overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-slate-950/90 via-slate-950/80 to-slate-900/90 shadow-[0_25px_70px_-35px_rgba(0,0,0,0.95)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_80px_-35px_rgba(229,9,20,0.55)]">
-                        <div class="relative overflow-hidden aspect-[2/3] bg-[#0b0b0b]">
-                            <img src="${posterUrl}" alt="${m.title}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" referrerPolicy="no-referrer">
-                            <div class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950/95 via-slate-950/20 to-transparent"></div>
-                            <div class="absolute top-3 right-3 flex flex-col gap-2 z-10">
+                    <div onclick="navigateTo('bot-web-page/movie/${cardSlug}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between">
+                        <div class="relative overflow-hidden rounded-lg aspect-[2/3] bg-brand-darkBg flex items-center justify-center">
+                            <img src="${posterUrl}" alt="${m.title}" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition duration-300" referrerPolicy="no-referrer">
+                            <div class="absolute top-2 right-2 flex flex-col gap-1 z-10">
                                 ${ratingBadge}
                             </div>
                         </div>
-                        <div class="p-4 space-y-2">
-                            <h3 class="font-semibold text-sm sm:text-base text-white group-hover:text-brand-red transition duration-300 truncate" title="${m.title}">${m.title}</h3>
-                            <div class="flex items-center justify-between gap-2 text-[11px] text-gray-400">
-                                <div class="flex items-center gap-2">${yearTag}${genreTag}</div>
-                                <span class="text-white/75 uppercase tracking-[0.24em] text-[10px]">${m.type || 'Movie'}</span>
+                        <div class="mt-3.5 space-y-1">
+                            <h3 class="font-bold text-sm text-white group-hover:text-brand-red transition duration-300 truncate tracking-tight" title="${m.title}">${m.title}</h3>
+                            <div class="flex items-center justify-between text-xs pt-1">
+                                ${yearTag}
+                                <span class="bg-white/5 border border-white/[0.05] text-[10px] text-gray-400 font-bold uppercase tracking-wide px-1.5 py-0.5 rounded">${m.type || 'Movie'}</span>
                             </div>
                         </div>
                     </div>
@@ -867,48 +813,11 @@
                     pagination.classList.add('hidden');
                 }
 
-                // Save lightweight metadata about the current catalog to localStorage
-                try {
-                    const total = result.pagination && typeof result.pagination.totalResults !== 'undefined'
-                        ? result.pagination.totalResults
-                        : (Array.isArray(result.data) ? result.data.length : 0);
-                    localStorage.setItem('movies_total', String(total));
-                    localStorage.setItem('movies_last_fetch', String(Date.now()));
-                } catch (e) {
-                    console.warn('Could not update movies metadata in localStorage:', e);
-                }
-
             } catch (err) {
                 console.error('Error fetching movies data:', err);
                 loader.classList.add('hidden');
                 grid.innerHTML = `<div class="col-span-full text-center py-12 text-sm text-red-500">Could not retrieve movie lists. Check server connection logs.</div>`;
             }
-        }
-
-        // Periodic poll to detect backend catalog changes and refresh UI/cache
-        function startMoviesPoll(intervalMs = 30000) {
-            // Do nothing in environments without fetch
-            if (typeof fetch === 'undefined') return;
-
-            // Poll in the background and only request a minimal payload (first item)
-            setInterval(async () => {
-                try {
-                    const sQuery = encodeURIComponent(currentSearchQuery || '');
-                    const resp = await fetch(`${serverUrl}/api/movies`);
-                    if (!resp.ok) return;
-                    const data = await resp.json();
-                    const newTotal = data?.pagination?.totalResults ?? (Array.isArray(data.data) ? data.data.length : 0);
-                    const cachedTotal = parseInt(localStorage.getItem('movies_total') || '0', 10);
-                    if (!isNaN(newTotal) && newTotal !== cachedTotal) {
-                        console.info('Detected change in movie catalog (total:', newTotal, 'cached:', cachedTotal, '). Refreshing...');
-                        // Refresh the visible list for the current page/search
-                        fetchMovies();
-                    }
-                } catch (err) {
-                    // Fail silently to avoid noisy logs during intermittent network issues
-                    console.debug('Movies poll error:', err);
-                }
-            }, intervalMs);
         }
 
         // Render top hero spotlight block
@@ -951,7 +860,7 @@
             }
 
             const heroSlug = toSlug(movie.title) + (movie.year && movie.year !== "N/A" ? "_" + toSlug(movie.year) : "");
-            heroCta.onclick = () => navigateTo(`/bot-web-page/movie/${heroSlug}`);
+            heroCta.onclick = () => navigateTo(`bot-web-page/movie/${heroSlug}`);
             initIcons();
         }
 
@@ -960,7 +869,9 @@
             currentSearchQuery = "";
             currentPage = 1;
             const deskInput = document.getElementById('search-input');
+            const mobInput = document.getElementById('search-input-mobile');
             if (deskInput) deskInput.value = "";
+            if (mobInput) mobInput.value = "";
             updateUrlParams();
             fetchMovies();
         }
@@ -1092,7 +1003,7 @@
                     if (notFoundEl) {
                         notFoundEl.classList.remove('hidden');
                     } else {
-                        window.location.href = "/notfound.html";
+                        window.location.href = "bot-web-page/notfound.html";
                     }
                     initIcons();
                     return;
@@ -1116,7 +1027,7 @@
                         const slugPath = toSlug(m.title) + (m.year && m.year !== "N/A" ? "_" + toSlug(m.year) : "");
                         
                         recentHtml += `
-                        <div onclick="navigateTo('/bot-web-page/movie/${slugPath}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                        <div onclick="navigateTo('bot-web-page/movie/${slugPath}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
                             <div class="relative overflow-hidden rounded-lg aspect-[2/3] bg-brand-darkBg flex items-center justify-center">
                                 <img loading="lazy" src="${posterUrl}" alt="${m.title}" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition duration-300" referrerPolicy="no-referrer">
                             </div>
@@ -1173,48 +1084,44 @@
                     // Sorting logic inside files matching resolutions list
                     const resOrder = { "480p": 1, "720p": 2, "1080p": 3, "2160p": 4, "4k": 5 };
                     const sortedFiles = [...files].sort((a, b) => {
-                        const aRes = getBestResolution(a);
-                        const bRes = getBestResolution(b);
+                        const aRes = a.resolution ? a.resolution.toLowerCase() : "";
+                        const bRes = b.resolution ? b.resolution.toLowerCase() : "";
                         return (resOrder[aRes] || 99) - (resOrder[bRes] || 99);
                     });
 
                     let fileRowsHtml = "";
-                    console.log("Sorted files for display:", sortedFiles);
                     sortedFiles.forEach(f => {
                         const sizeMB = (f.fileSize / (1024 * 1024)).toFixed(1);
-                        const cleanResolution = getBestResolution(f).toUpperCase();
+                        const cleanResolution = f.resolution ? f.resolution.toUpperCase() : "HD";
+                        const releaseTags = extractReleaseTags(f.title || "");
+                        const tagsHtml = releaseTags.length
+                            ? `<div class="flex flex-wrap gap-2 mt-2">${releaseTags
+                                .map((tag) => `<span class="text-[10px] uppercase tracking-[0.15em] bg-slate-800 border border-slate-700 text-slate-200 px-2 py-1 rounded-full">${tag}</span>`)
+                                .join("")}</div>`
+                            : "";
                         
                         // Construct the secure Telegram deep-linking start URL parameter
                         const deepLink = `https://t.me/${botUsernameClient}?start=movie_${f.id}`;
 
                         fileRowsHtml += `
-                        <div class="flex flex-col gap-4 p-5 bg-[#111827]/95 border border-white/10 rounded-[32px] hover:border-brand-red/30 hover:bg-[#141b2f] transition-all duration-300 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.9)]">
-                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                                <div class="flex items-start gap-4">
-                                    <div class="grid place-items-center w-14 h-14 rounded-3xl bg-brand-red/10 text-brand-red border border-brand-red/20 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05)]">
-                                        <i data-lucide="film" class="w-5 h-5"></i>
-                                    </div>
-                                    <div class="space-y-2">
-                                        <div class="flex flex-wrap items-center gap-2">
-                                            <span class="text-sm font-bold text-white uppercase tracking-[0.24em]">${cleanResolution}</span>
-                                            <span class="text-xs text-gray-400 font-medium">${sizeMB} MB</span>
-                                        </div>
-                                        <p class="text-sm text-gray-300 leading-relaxed max-w-2xl break-words word-break" style="word-break: break-word; word-wrap: break-word;" title="${f.title}">${f.title}</p>
-                                    </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-[#181818] border border-white/[0.04] rounded-xl hover:border-brand-red/40 hover:bg-[#202020] transition-all duration-350 gap-4">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-brand-red/10 border border-brand-red/20 text-brand-red text-[10px] font-bold px-2 py-0.5 rounded tracking-wide uppercase">${cleanResolution}</span>
+                                    <span class="text-xs text-gray-500 font-semibold">${sizeMB} MB</span>
                                 </div>
-                                <div class="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/5 px-3 py-1 text-xs text-gray-300">
-                                    <i data-lucide="clock" class="w-3.5 h-3.5"></i>
-                                    ${cleanResolution}
-                                </div>
+                                <h4 class="text-xs sm:text-sm font-bold text-white tracking-tight leading-snug break-all" title="${f.title}">${f.title}</h4>
+                                ${tagsHtml}
                             </div>
                             
                             <!-- Actions -->
-                            <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
-                                <button onclick="sendDirectFile('${f.id}', this)" class="direct-send-btn hidden w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-full flex items-center justify-center gap-2 transition-all transform active:scale-95 shadow-lg shadow-emerald-500/20">
+                            <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto shrink-0">
+                                <!-- Direct Telegram Delivery Button (visible only if stored tg UID matches) -->
+                                <button onclick="sendDirectFile('${f.id}', this)" class="direct-send-btn hidden w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-all transform active:scale-95 shadow-md">
                                     <i data-lucide="send" class="w-4 h-4"></i> Send to My Chat
                                 </button>
 
-                                <a href="${deepLink}" target="_blank" class="w-full sm:w-auto bg-slate-900 hover:bg-brand-red text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full flex items-center justify-center gap-2 transition-all transform active:scale-95 shadow-sm shadow-black/20">
+                                <a href="${deepLink}" target="_blank" class="w-full sm:w-auto bg-[#2C2C2C] hover:bg-brand-red text-white hover:shadow-lg hover:shadow-brand-red/10 text-xs sm:text-sm font-bold px-5 py-3 sm:py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all transform active:scale-95">
                                     <i data-lucide="send-to-back" class="w-4 h-4"></i> Get File In Bot
                                 </a>
                             </div>
@@ -1239,7 +1146,7 @@
                 if (notFoundEl) {
                     notFoundEl.classList.remove('hidden');
                 } else {
-                    window.location.href = "/notfound.html";
+                    window.location.href = "website/notfound.html";
                 }
                 initIcons();
             }

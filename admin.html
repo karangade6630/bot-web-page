@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Bot Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // When hosting frontend separately, override this value with the backend API URL.
+    // Example: window.__API_BASE = "https://my-backend.example.com/api/admin";
+    // In local dev/GitHub.dev preview, use standard relative logic:
+    window.__API_BASE = "https://telegram-bot-pgd8.onrender.com" + "/api/admin";
+  </script>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 py-6">
+    <header class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Admin panel</p>
+        <h1 class="text-3xl font-semibold">Movie Search Bot Dashboard</h1>
+        <p class="mt-2 text-slate-400 max-w-2xl">Manage uploaded files, edit titles, search IMDb metadata, and keep your bot catalog in sync.</p>
+      </div>
+      <div class="flex flex-wrap gap-3 items-center">
+        <button id="refreshSyncBtn" class="btn-secondary">Refresh Sync</button>
+        <button id="logoutBtn" class="btn-danger">Logout</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="login-screen" class="max-w-lg mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-xl">
+        <h2 class="text-2xl font-semibold mb-4">Admin Login</h2>
+        <p class="text-slate-400 mb-6">Enter the admin password to access the bot management panel.</p>
+        <form id="loginForm" class="space-y-4">
+          <label class="block text-slate-300">Password</label>
+          <input id="adminPassword" type="password" autocomplete="current-password" class="input-field" placeholder="Admin password" required />
+          <button type="submit" class="btn-primary w-full">Sign in</button>
+          <p id="loginError" class="text-sm text-rose-400 hidden"></p>
+        </form>
+      </section>
+
+      <section id="admin-screen" class="hidden space-y-6">
+        <div class="grid gap-6 lg:grid-cols-[1.35fr_0.9fr]">
+          <div class="space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 class="text-xl font-semibold">Movie Titles</h2>
+                  <p class="text-slate-400">Search the movie catalog and tap a title to view its file list.</p>
+                </div>
+                <div class="flex flex-col gap-3">
+                  <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <input id="fileSearch" type="search" placeholder="Search movie titles" class="input-field flex-1 min-w-0" />
+                    <button id="fileSearchBtn" class="btn-primary">Search</button>
+                  </div>
+                  <div class="flex flex-wrap gap-3">
+                    <button id="selectAllMoviesBtn" class="btn-secondary">Select All</button>
+                    <button id="deleteSelectedMoviesBtn" class="btn-danger">Delete selected</button>
+                    <button id="clearMovieSelectionBtn" class="btn-secondary">Clear selection</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="titlesWrapper" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl overflow-y-auto" style="max-height: 700px;">
+              <div id="titlesList" class="space-y-3"></div>
+              <p id="titlesEmpty" class="mt-4 text-slate-500 hidden">No titles found. Try a different search term.</p>
+              <p id="titlesLoading" class="mt-4 text-slate-400 hidden">Loading more titles...</p>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <h2 class="text-xl font-semibold">Selected File</h2>
+                  <p class="text-slate-400">View file details and edit metadata below.</p>
+                </div>
+                <button id="clearSelectionBtn" class="btn-secondary">Clear</button>
+              </div>
+
+              <div id="selectedFileInfo" class="hidden mt-6 space-y-3 text-sm text-slate-300">
+                <div><span class="font-semibold text-slate-200">Filename:</span> <span id="selectedFileName"></span></div>
+                <div><span class="font-semibold text-slate-200">Resolution:</span> <span id="selectedFileResolution"></span></div>
+                <div><span class="font-semibold text-slate-200">Size:</span> <span id="selectedFileSize"></span></div>
+                <div><span class="font-semibold text-slate-200">Type:</span> <span id="selectedFileMimeType"></span></div>
+              </div>
+
+              <form id="fileEditForm" class="mt-6 space-y-4">
+                <h3 class="text-lg font-semibold">Edit file details</h3>
+                <p class="text-slate-400 text-sm">Update file metadata and save changes.</p>
+                
+                <div>
+                  <label class="label">Title</label>
+                  <input id="fileTitle" class="input-field" />
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="label">Resolution</label>
+                    <input id="fileResolution" class="input-field" />
+                  </div>
+                  <div>
+                    <label class="label">Size (bytes)</label>
+                    <input id="fileSize" type="number" class="input-field" />
+                  </div>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="label">Mime type</label>
+                    <input id="fileMimeType" class="input-field" />
+                  </div>
+                  <div>
+                    <label class="label">Movie ID</label>
+                    <input id="fileMovieId" class="input-field" />
+                  </div>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="label">Channel ID</label>
+                    <input id="fileChannelId" class="input-field" />
+                  </div>
+                  <div>
+                    <label class="label">Telegram File ID</label>
+                    <input id="fileTelegramId" class="input-field" />
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-3 pt-2">
+                  <button id="fileUpdateBtn" type="button" class="btn-primary">Save File</button>
+                  <button id="fileDeleteBtn" type="button" class="btn-danger">Delete File</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+              <h2 class="text-xl font-semibold">IMDb Search & Update</h2>
+              <p class="text-slate-400">Search IMDb metadata and apply it to the selected file or movie.</p>
+
+              <div class="mt-5 space-y-4">
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <input id="imdbQuery" class="input-field" placeholder="Search title on IMDb" />
+                  <input id="imdbYear" class="input-field" placeholder="Year (optional)" />
+                </div>
+                <button id="imdbSearchBtn" class="btn-primary w-full">Search IMDb</button>
+              </div>
+
+              <div id="imdbResult" class="mt-6 hidden rounded-3xl border border-slate-800 bg-slate-950 p-4">
+                <p class="text-slate-300 font-semibold">IMDb result</p>
+                <div class="mt-3 grid gap-4 lg:grid-cols-[140px_1fr]">
+                  <div class="rounded-3xl overflow-hidden border border-slate-800 bg-slate-900">
+                    <img id="imdbResultPoster" src="" alt="IMDb poster" class="h-full w-full object-cover" />
+                  </div>
+                  <div id="imdbResultContent" class="space-y-2 text-slate-300"></div>
+                </div>
+                <div class="flex flex-wrap gap-3 pt-3">
+                  <button id="applyImdbToFileBtn" class="btn-secondary">Update Selected File Title</button>
+                  <button id="applyImdbToMovieBtn" class="btn-secondary">Update Selected Movie</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h2 class="text-xl font-semibold">Selected Movie</h2>
+                <p class="text-slate-400">View movie metadata and related files here.</p>
+              </div>
+              <span id="selectedMovieCount" class="text-slate-400 text-sm">No title selected</span>
+            </div>
+            <div id="selectedMovieInfo" class="mt-6 grid gap-4 lg:grid-cols-[180px_1fr] items-start">
+              <div class="rounded-3xl overflow-hidden border border-slate-800 bg-slate-950 shadow-inner" id="posterContainer">
+                <img id="selectedMoviePoster" src="" alt="Poster" class="h-full w-full object-cover" />
+              </div>
+              <div class="space-y-3">
+                <p id="selectedMovieTitle" class="text-2xl font-semibold text-slate-100"></p>
+                <p id="selectedMovieMeta" class="text-slate-400"></p>
+                <p id="selectedMoviePlot" class="text-slate-300 leading-7"></p>
+                <div class="grid gap-3 sm:grid-cols-2 text-sm text-slate-400">
+                  <div><span class="font-semibold text-slate-200">Genre:</span> <span id="selectedMovieGenre"></span></div>
+                  <div><span class="font-semibold text-slate-200">Rating:</span> <span id="selectedMovieRating"></span></div>
+                  <div><span class="font-semibold text-slate-200">Director:</span> <span id="selectedMovieDirector"></span></div>
+                  <div><span class="font-semibold text-slate-200">Stars:</span> <span id="selectedMovieStars"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+              <h3 class="text-lg font-semibold">Edit selected movie details</h3>
+              <p class="text-slate-400 text-sm">Update the selected movie metadata and save it back to your catalog.</p>
+              <form id="selectedMovieForm" class="mt-5 space-y-4">
+                <div>
+                  <label class="label">Title</label>
+                  <input id="movieTitle" class="input-field" />
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="label">Year</label>
+                    <input id="movieYear" class="input-field" />
+                  </div>
+                  <div>
+                    <label class="label">Poster URL</label>
+                    <input id="moviePoster" class="input-field" />
+                  </div>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="label">Genre</label>
+                    <input id="movieGenre" class="input-field" />
+                  </div>
+                  <div>
+                    <label class="label">Director</label>
+                    <input id="movieDirector" class="input-field" />
+                  </div>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="label">Stars</label>
+                    <input id="movieStars" class="input-field" />
+                  </div>
+                  <div>
+                    <label class="label">IMDb Rating</label>
+                    <input id="movieRating" class="input-field" />
+                  </div>
+                </div>
+                <div>
+                  <label class="label">Description</label>
+                  <textarea id="movieDescription" rows="4" class="input-field resize-none"></textarea>
+                </div>
+                <div class="flex flex-wrap gap-3 pt-2">
+                  <button id="movieUpdateBtn" type="button" class="btn-primary">Save Movie</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 class="text-xl font-semibold">Files for selected title</h2>
+                <p class="text-slate-400">Showing up to 10 files for the selected movie.</p>
+              </div>
+              <div class="flex flex-wrap gap-3">
+                <button id="selectAllFilesBtn" class="btn-secondary">Select All Files</button>
+                <button id="deleteSelectedFilesBtn" class="btn-danger">Delete selected files</button>
+                <button id="clearFileSelectionBtn" class="btn-secondary">Clear file selection</button>
+              </div>
+            </div>
+            <div class="mt-5 overflow-x-auto">
+              <table class="min-w-full text-left text-sm text-slate-200">
+                <thead class="border-b border-slate-700 text-slate-400">
+                  <tr>
+                    <th class="px-4 py-3"><span class="sr-only">Select</span></th>
+                    <th class="px-4 py-3">Filename</th>
+                    <th class="px-4 py-3">Resolution</th>
+                    <th class="px-4 py-3">Size</th>
+                    <th class="px-4 py-3">Type</th>
+                  </tr>
+                </thead>
+                <tbody id="selectedFilesTableBody" class="divide-y divide-slate-800"></tbody>
+              </table>
+              <p id="selectedFilesEmpty" class="mt-4 text-slate-500 hidden">No files found for this title.</p>
+              <button id="loadMoreFilesBtn" class="btn-secondary mt-4 hidden">Load more files</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
