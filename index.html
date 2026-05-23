@@ -791,26 +791,30 @@
     const desktopSearch = document.getElementById('search-input');
     const desktopBtn = document.getElementById('search-btn');
 
-    const handleTriggerSearch = (val) => {
-        const clean = val.trim();
-        currentSearchQuery = clean;
+   const handleTriggerSearch = (val) => {
+    const clean = val.trim();
 
-        const url = new URL(window.location.href);
+    currentSearchQuery = clean;
+    currentPage = 1;
 
-        if (clean) {
-            url.searchParams.set('search', clean);
-        } else {
-            url.searchParams.delete('search');
-        }
+    // ALWAYS go back to index route when searching
+    const url = new URL(window.location.href);
 
-        url.searchParams.delete('page');
-        currentPage = 1;
+    url.pathname = BASE_PATH + "/";   // force home route
 
-        window.history.pushState(null, "", url.pathname + url.search);
+    if (clean) {
+        url.searchParams.set('search', clean);
+    } else {
+        url.searchParams.delete('search');
+    }
 
-        parseUrlParams();
-        fetchMovies();
-    };
+    url.searchParams.delete('page');
+
+    window.history.pushState(null, "", url.pathname + url.search);
+
+    parseUrlParams();
+    routeHandler();   // IMPORTANT (not just fetchMovies)
+};
 
     if (desktopSearch) {
         desktopSearch.value = currentSearchQuery;
