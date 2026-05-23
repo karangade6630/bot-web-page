@@ -1155,7 +1155,7 @@
                         const slugPath = toSlug(m.title) + (m.year && m.year !== "N/A" ? "_" + toSlug(m.year) : "");
                         
                         recentHtml += `
-                        <div onclick="navigateTo('/bot-web-page/movie/${slugPath}')" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                        <div onclick="navigateTo(`movie/${slugPath}`)" class="group bg-brand-cardBg border border-white/[0.04] p-3 rounded-xl cursor-pointer hover:bg-brand-hoverBg hover:border-brand-red/30 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
                             <div class="relative overflow-hidden rounded-lg aspect-[2/3] bg-brand-darkBg flex items-center justify-center">
                                 <img loading="lazy" src="${posterUrl}" alt="${m.title}" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition duration-300" referrerPolicy="no-referrer">
                             </div>
