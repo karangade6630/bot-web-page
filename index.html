@@ -765,12 +765,34 @@
             const desktopBtn = document.getElementById('search-btn');
             const mobileBtn = document.getElementById('search-btn-mobile');
 
+            // const handleTriggerSearch = (val) => {
+            //     currentSearchQuery = val.trim();
+            //     currentPage = 1;
+            //     updateUrlParams();
+            //     fetchMovies();
+            // };
+
             const handleTriggerSearch = (val) => {
-                currentSearchQuery = val.trim();
-                currentPage = 1;
-                updateUrlParams();
-                fetchMovies();
-            };
+    const url = new URL(window.location.href);
+
+    const clean = val.trim();
+    currentSearchQuery = clean;
+
+    if (clean) {
+        url.searchParams.set('search', clean);
+    } else {
+        url.searchParams.delete('search');
+    }
+
+    url.searchParams.delete('page');
+    currentPage = 1;
+
+    window.history.pushState(null, "", url.pathname + url.search);
+
+    parseUrlParams(); // re-sync UI
+    fetchMovies();
+};
+            
 
             if (desktopSearch) {
                 desktopSearch.value = currentSearchQuery;
