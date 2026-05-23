@@ -434,47 +434,147 @@
         }
 
         function extractReleaseTags(title) {
-            const tags = [
-                "NF-WEB",
-                "NF-WB",
-                "NF",
-                "WEB-DL",
-                "WEB",
-                "HDTC",
-                "HEVC",
-                "HTS",
-                "HTDS",
-                "HTPC",
-                "HTCP",
-                "TELESYNC",
-                "TS",
-                "TC",
-                "CAM",
-                "DVDRIP",
-                "HDRIP",
-                "BLURAY",
-                "BDRIP",
-                "HDTV",
-                "HDCAM",
-                "BDR",
-                "WEBRIP",
-                "HC",
-            ];
-            if (typeof title !== "string") return [];
-            const normalized = title.toUpperCase();
-            const matches = [];
-            tags.forEach((tag) => {
-                const parts = tag.split(/[^A-Z0-9]+/).filter(Boolean);
-                const regex = new RegExp(
-                    `\\b${parts.map((part) => part.replace(/[.*+?^${}()|[\\]\\]/g, "\\\\$&")).join("[.\\-_ ]+")}(?:\\b|$)`,
-                    "i"
-                );
-                if (regex.test(normalized) && !matches.includes(tag)) {
-                    matches.push(tag);
-                }
-            });
-            return matches;
+    const tags = [
+        "NF-WEB",
+        "NF-WB",
+        "NF",
+        "WEB-DL",
+        "WEB",
+        "WEBRIP",
+        "AMZN",
+        "AMZN-WEB",
+        "DSNP",
+        "HMAX",
+        "ATVP",
+        "PCOK",
+        "HULU",
+        "CR",
+        "CRUNCHYROLL",
+        "VIKI",
+        "NETFLIX",
+
+        "HDTC",
+        "TC",
+        "TELECINE",
+        "TELESYNC",
+        "TS",
+        "CAM",
+        "CAMRIP",
+        "HDCAM",
+        "HDTS",
+        "HD-TS",
+        "SCREENER",
+        "DVDSCR",
+        "R5",
+        "PPVRIP",
+        "WORKPRINT",
+
+        "DVDRIP",
+        "DVD",
+        "DVD5",
+        "DVD9",
+        "HDRIP",
+        "BDRIP",
+        "BRRIP",
+        "BLURAY",
+        "BLU-RAY",
+        "BDREMUX",
+        "REMUX",
+        "BDR",
+        "UHD",
+        "UHDRIP",
+        "UHDBLURAY",
+
+        "2160P",
+        "1440P",
+        "1080P",
+        "720P",
+        "480P",
+
+        "HDTV",
+        "PDTV",
+        "DSR",
+        "DTH",
+        "SATRIP",
+
+        "HEVC",
+        "X265",
+        "H265",
+        "X264",
+        "H264",
+        "AV1",
+
+        "AAC",
+        "AAC2.0",
+        "DD",
+        "DDP",
+        "DD+",
+        "DD5.1",
+        "TRUEHD",
+        "ATMOS",
+        "DTS",
+        "DTS-HD",
+        "FLAC",
+
+        "HC",
+        "HC-SUBS",
+        "SUBBED",
+        "DUBBED",
+        "DUAL-AUDIO",
+        "MULTI",
+        "PROPER",
+        "REPACK",
+        "LIMITED",
+        "UNCUT",
+        "EXTENDED",
+        "REMASTERED",
+
+        "HTS",
+        "HTDS",
+        "HTPC",
+        "HTCP",
+    ];
+
+    if (typeof title !== "string") return [];
+
+    // normalize title heavily
+    const normalized = title
+        .toUpperCase()
+        .replace(/[\[\]()]/g, " ")
+        .replace(/[._\-]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    const matches = [];
+
+    for (const tag of tags) {
+        // normalize tag too
+        const cleanTag = tag
+            .toUpperCase()
+            .replace(/[._\-+]+/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+
+        // VERY flexible regex
+        const pattern = cleanTag
+            .split(" ")
+            .map(part =>
+                part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+            )
+            .join("[\\s._\\-]*");
+
+        const regex = new RegExp(
+            `(?:^|[^A-Z0-9])${pattern}(?:[^A-Z0-9]|$)`,
+            "i"
+        );
+
+        if (regex.test(normalized)) {
+            matches.push(tag);
         }
+    }
+
+    return [...new Set(matches)];
+}
 
         // Initialize Lucide Icons helper
         function initIcons() {
