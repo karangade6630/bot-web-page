@@ -415,6 +415,7 @@
 
     <!-- CLIENT ROUTER & DATA INJECTOR SCRIPT -->
     <script>
+        const BASE_PATH = "/bot-web-page";
         const serverUrl = "https://movies-time-hmv6.onrender.com" // Dynamically resolve server origin
         // Global State Variables
         let currentPage = 1;
@@ -737,26 +738,25 @@
 
         // Router matcher mapping URI values to frontend states
         function routeHandler() {
-            const path = window.location.pathname;
-            const movieMatch = path.match(/\/movie\/([^/]+)/);
+    const path = window.location.pathname.replace(BASE_PATH, "");
 
-            if (movieMatch) {
-                // Show Movie Detail Page
-                const movieIdOrSlug = movieMatch[1];
-                renderDetailPage(movieIdOrSlug);
-            } else {
-                // Show Main Dashboard Grid
-                renderIndexPage();
-            }
-        }
+    const movieMatch = path.match(/^\/movie\/([^/]+)/);
+
+    if (movieMatch) {
+        const movieIdOrSlug = movieMatch[1];
+        renderDetailPage(movieIdOrSlug);
+    } else {
+        renderIndexPage();
+    }
+}
 
         // SPA Navigation Helper
         function navigateTo(url) {
-            window.history.pushState(null, "", url);
-            routeHandler();
-            // Scroll smoothly to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    const fullUrl = BASE_PATH + "/" + url.replace(/^\/+/, "");
+    window.history.pushState(null, "", fullUrl);
+    routeHandler();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
         // Setup click-based Event Listeners for Search Input (No more debounce triggers!)
         function setupSearchListeners() {
