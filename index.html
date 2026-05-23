@@ -759,62 +759,73 @@
 }
 
         // Setup click-based Event Listeners for Search Input (No more debounce triggers!)
+        // function setupSearchListeners() {
+        //     const desktopSearch = document.getElementById('search-input');
+        //     const mobileSearch = document.getElementById('search-input-mobile');
+        //     const desktopBtn = document.getElementById('search-btn');
+        //     const mobileBtn = document.getElementById('search-btn-mobile');
+
+        //     if (desktopSearch) {
+        //         desktopSearch.value = currentSearchQuery;
+        //     }
+        //     if (mobileSearch) {
+        //         mobileSearch.value = currentSearchQuery;
+        //     }
+
+        //     if (desktopBtn && desktopSearch) {
+        //         desktopBtn.onclick = () => handleTriggerSearch(desktopSearch.value);
+        //         desktopSearch.onkeydown = (e) => {
+        //             if (e.key === 'Enter') handleTriggerSearch(desktopSearch.value);
+        //         };
+        //     }
+
+        //     if (mobileBtn && mobileSearch) {
+        //         mobileBtn.onclick = () => handleTriggerSearch(mobileSearch.value);
+        //         mobileSearch.onkeydown = (e) => {
+        //             if (e.key === 'Enter') handleTriggerSearch(mobileSearch.value);
+        //         };
+        //     }
+        // }
+
         function setupSearchListeners() {
-            const desktopSearch = document.getElementById('search-input');
-            const mobileSearch = document.getElementById('search-input-mobile');
-            const desktopBtn = document.getElementById('search-btn');
-            const mobileBtn = document.getElementById('search-btn-mobile');
+    const desktopSearch = document.getElementById('search-input');
+    const desktopBtn = document.getElementById('search-btn');
 
-            // const handleTriggerSearch = (val) => {
-            //     currentSearchQuery = val.trim();
-            //     currentPage = 1;
-            //     updateUrlParams();
-            //     fetchMovies();
-            // };
+    const handleTriggerSearch = (val) => {
+        const clean = val.trim();
+        currentSearchQuery = clean;
 
-            const handleTriggerSearch = (val) => {
-    const url = new URL(window.location.href);
+        const url = new URL(window.location.href);
 
-    const clean = val.trim();
-    currentSearchQuery = clean;
+        if (clean) {
+            url.searchParams.set('search', clean);
+        } else {
+            url.searchParams.delete('search');
+        }
 
-    if (clean) {
-        url.searchParams.set('search', clean);
-    } else {
-        url.searchParams.delete('search');
+        url.searchParams.delete('page');
+        currentPage = 1;
+
+        window.history.pushState(null, "", url.pathname + url.search);
+
+        parseUrlParams();
+        fetchMovies();
+    };
+
+    if (desktopSearch) {
+        desktopSearch.value = currentSearchQuery;
+
+        desktopSearch.onkeydown = (e) => {
+            if (e.key === 'Enter') {
+                handleTriggerSearch(desktopSearch.value);
+            }
+        };
     }
 
-    url.searchParams.delete('page');
-    currentPage = 1;
-
-    window.history.pushState(null, "", url.pathname + url.search);
-
-    parseUrlParams(); // re-sync UI
-    fetchMovies();
-};
-            
-
-            if (desktopSearch) {
-                desktopSearch.value = currentSearchQuery;
-            }
-            if (mobileSearch) {
-                mobileSearch.value = currentSearchQuery;
-            }
-
-            if (desktopBtn && desktopSearch) {
-                desktopBtn.onclick = () => handleTriggerSearch(desktopSearch.value);
-                desktopSearch.onkeydown = (e) => {
-                    if (e.key === 'Enter') handleTriggerSearch(desktopSearch.value);
-                };
-            }
-
-            if (mobileBtn && mobileSearch) {
-                mobileBtn.onclick = () => handleTriggerSearch(mobileSearch.value);
-                mobileSearch.onkeydown = (e) => {
-                    if (e.key === 'Enter') handleTriggerSearch(mobileSearch.value);
-                };
-            }
-        }
+    if (desktopBtn) {
+        desktopBtn.onclick = () => handleTriggerSearch(desktopSearch.value);
+    }
+}
 
         // Function wrapper for Home route
         function renderIndexPage() {
