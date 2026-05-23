@@ -433,6 +433,31 @@
                 .replace(/[\s-]+/g, "_");
         }
 
+        function extractResolution(title) {
+    if (!title || typeof title !== "string") return null;
+
+    const normalized = title.toUpperCase();
+
+    // ordered highest -> lowest priority
+    const patterns = [
+        { label: "4320p", regex: /(?:^|[^A-Z0-9])(4320P|8K)(?:[^A-Z0-9]|$)/i },
+        { label: "2160p", regex: /(?:^|[^A-Z0-9])(2160P|4K|UHD)(?:[^A-Z0-9]|$)/i },
+        { label: "1440p", regex: /(?:^|[^A-Z0-9])1440P(?:[^A-Z0-9]|$)/i },
+        { label: "1080p", regex: /(?:^|[^A-Z0-9])(1080P|FHD)(?:[^A-Z0-9]|$)/i },
+        { label: "720p", regex: /(?:^|[^A-Z0-9])(720P|HD)(?:[^A-Z0-9]|$)/i },
+        { label: "480p", regex: /(?:^|[^A-Z0-9])(480P|SD)(?:[^A-Z0-9]|$)/i },
+        { label: "360p", regex: /(?:^|[^A-Z0-9])360P(?:[^A-Z0-9]|$)/i },
+    ];
+
+    for (const item of patterns) {
+        if (item.regex.test(normalized)) {
+            return item.label;
+        }
+    }
+
+    return "HD";
+}
+
         function extractReleaseTags(title) {
     const tags = [
         "NF-WEB",
@@ -484,12 +509,6 @@
         "UHD",
         "UHDRIP",
         "UHDBLURAY",
-
-        "2160P",
-        "1440P",
-        "1080P",
-        "720P",
-        "480P",
 
         "HDTV",
         "PDTV",
@@ -1182,12 +1201,23 @@
                     filesEmpty.classList.remove('hidden');
                 } else {
                     // Sorting logic inside files matching resolutions list
-                    const resOrder = { "480p": 1, "720p": 2, "1080p": 3, "2160p": 4, "4k": 5 };
-                    const sortedFiles = [...files].sort((a, b) => {
-                        const aRes = a.resolution ? a.resolution.toLowerCase() : "";
-                        const bRes = b.resolution ? b.resolution.toLowerCase() : "";
-                        return (resOrder[aRes] || 99) - (resOrder[bRes] || 99);
-                    });
+                    const resOrder = {
+    "360p": 1,
+    "480p": 2,
+    "720p": 3,
+    "1080p": 4,
+    "1440p": 5,
+    "2160p": 6,
+    "4320p": 7,
+    "HD": 99,
+};
+
+const sortedFiles = [...files].sort((a, b) => {
+    const aRes = extractResolution(a.title);
+    const bRes = extractResolution(b.title);
+
+    return (resOrder[aRes] || 99) - (resOrder[bRes] || 99);
+});
 
                     let fileRowsHtml = "";
                     sortedFiles.forEach(f => {
