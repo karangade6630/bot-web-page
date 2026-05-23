@@ -1222,7 +1222,11 @@ const sortedFiles = [...files].sort((a, b) => {
                     let fileRowsHtml = "";
                     sortedFiles.forEach(f => {
                         const sizeMB = (f.fileSize / (1024 * 1024)).toFixed(1);
-                        const cleanResolution = f.resolution ? f.resolution.toUpperCase() : "HD";
+                        const cleanResolution = (
+                                        extractResolution(f.title || "") ||
+                                        f.resolution ||
+                                        "HD"
+                                    ).toUpperCase();
                         const releaseTags = extractReleaseTags(f.title || "");
                         const tagsHtml = releaseTags.length
                             ? `<div class="flex flex-wrap gap-2 mt-2">${releaseTags
