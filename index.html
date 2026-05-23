@@ -604,6 +604,15 @@
 
         // Deep connection triggers
         window.addEventListener('DOMContentLoaded', () => {
+
+
+            const redirect = sessionStorage.redirect;
+            
+            if (redirect) {
+                delete sessionStorage.redirect;
+                history.replaceState(null, "", redirect);
+            }
+            
             initTheme();
             parseUrlParams();
             fetchBotInfo();
